@@ -119,31 +119,55 @@ class QuickScribeReader {
     this.overlay = document.createElement("div");
     this.overlay.className = "quickscribe-reader-overlay";
 
-    // Create header
-    const header = document.createElement("div");
-    header.className = "quickscribe-reader-header";
+    // --- NEW NAVBAR START ---
+    const navbar = document.createElement("nav");
+    navbar.className = "qs-navbar";
+    navbar.setAttribute("role", "navigation");
 
-    const title = document.createElement("h1");
-    title.className = "quickscribe-reader-title";
-    title.textContent = content.title || "Reader Mode";
+    // Logo
+    const logo = document.createElement("img");
+    logo.src = chrome.runtime.getURL("assets/logo.png");
+    logo.alt = "QuickScribe Logo";
+    logo.className = "qs-navbar-logo";
 
-    const controls = document.createElement("div");
-    controls.className = "quickscribe-reader-controls";
+    // Right controls container
+    const navControls = document.createElement("div");
+    navControls.className = "qs-navbar-controls";
 
+    // Summarize with AI button
     const summaryBtn = document.createElement("button");
-    summaryBtn.className = "quickscribe-btn quickscribe-btn-primary";
-    summaryBtn.textContent = "AI Summary";
+    summaryBtn.className = "qs-btn qs-btn-primary";
+    summaryBtn.type = "button";
+    summaryBtn.innerHTML = `
+      <span class="qs-btn-icon" aria-hidden="true">
+        <img src="${chrome.runtime.getURL(
+          "assets/summary-icon.svg"
+        )}" alt="Summarize" class="qs-btn-svg" />
+      </span>
+      <span class="qs-btn-label">Summarize with AI</span>
+    `;
     summaryBtn.addEventListener("click", () => this.generateSummary());
 
+    // Close reader button
     const closeBtn = document.createElement("button");
-    closeBtn.className = "quickscribe-btn quickscribe-btn-close";
-    closeBtn.textContent = "Close Reader";
+    closeBtn.className = "qs-btn qs-btn-secondary";
+    closeBtn.type = "button";
+    closeBtn.innerHTML = `
+      <span class="qs-btn-icon" aria-hidden="true">
+        <img src="${chrome.runtime.getURL(
+          "assets/close-icon.svg"
+        )}" alt="Close" class="qs-btn-svg" />
+      </span>
+      <span class="qs-btn-label">Close reader</span>
+    `;
     closeBtn.addEventListener("click", () => this.closeReader());
 
-    controls.appendChild(summaryBtn);
-    controls.appendChild(closeBtn);
-    header.appendChild(title);
-    header.appendChild(controls);
+    navControls.appendChild(summaryBtn);
+    navControls.appendChild(closeBtn);
+
+    navbar.appendChild(logo);
+    navbar.appendChild(navControls);
+    // --- NEW NAVBAR END ---
 
     // Create content area
     const contentArea = document.createElement("div");
@@ -159,14 +183,11 @@ class QuickScribeReader {
     contentArea.appendChild(article);
 
     // Assemble overlay
-    this.overlay.appendChild(header);
+    this.overlay.appendChild(navbar); // Use new navbar
     this.overlay.appendChild(contentArea);
 
     // Add to page
     document.body.appendChild(this.overlay);
-
-    // Focus management
-    summaryBtn.focus();
 
     // Handle escape key
     const handleEscape = (e) => {
@@ -200,12 +221,17 @@ class QuickScribeReader {
       return;
     }
 
-    const summaryBtn = this.overlay.querySelector(".quickscribe-btn-primary");
-    const originalText = summaryBtn.textContent;
+    const summaryBtn = this.overlay.querySelector(".qs-btn-primary");
+    const iconSpan = summaryBtn.querySelector(".qs-btn-icon");
+    const labelSpan = summaryBtn.querySelector(".qs-btn-label");
+    const originalLabel = "Summarize with AI";
 
     // Show loading state
     summaryBtn.disabled = true;
-    summaryBtn.textContent = "Generating...";
+    summaryBtn.classList.add("generating");
+    // Hide icon, show spinner (optional)
+    if (iconSpan) iconSpan.style.display = "none";
+    labelSpan.textContent = "Generating";
 
     try {
       // Prepare content (limit to 4000 characters)
@@ -260,9 +286,11 @@ class QuickScribeReader {
         this.showError("Failed to generate summary. Please try again.");
       }
     } finally {
-      // Restore button state
+      // Restore button state and icon
       summaryBtn.disabled = false;
-      summaryBtn.textContent = originalText;
+      summaryBtn.classList.remove("generating");
+      if (iconSpan) iconSpan.style.display = "flex";
+      labelSpan.textContent = originalLabel;
     }
   }
 

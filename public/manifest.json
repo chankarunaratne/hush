@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "QuickScribe Reader Mode",
+  "name": "Hush",
   "version": "1.0.0",
-  "description": "Clean reader mode with AI summarization for any webpage",
+  "description": "A beautiful reader mode powered by AI",
   "permissions": ["activeTab", "scripting"],
   "host_permissions": [
     "https://quickscribe-gl7p4e0o8-chandima-karunaratnes-projects.vercel.app/*"

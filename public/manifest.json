@@ -4,13 +4,18 @@
   "version": "1.0.0",
   "description": "Clean reader mode with AI summarization for any webpage",
   "permissions": ["activeTab", "scripting"],
+  "host_permissions": [
+    "https://quickscribe-gl7p4e0o8-chandima-karunaratnes-projects.vercel.app/*"
+  ],
   "background": {
     "service_worker": "background.js"
   },
   "action": {
     "default_title": "QuickScribe Reader Mode",
     "default_icon": {
-      "16": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2IiByeD0iMiIgZmlsbD0iIzQyODVmNCIvPgo8cGF0aCBkPSJNNC41IDQuNUgxMS41VjUuNUg0LjVWNC41WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTQuNSA2LjVIMTEuNVY3LjVINC41VjYuNVoiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik00LjUgOC41SDkuNVY5LjVINC41VjguNVoiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik00LjUgMTAuNUgxMS41VjExLjVINC41VjEwLjVaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K"
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
     }
   },
   "content_scripts": [
@@ -22,8 +27,8 @@
     }
   ],
   "icons": {
-    "16": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2IiByeD0iMiIgZmlsbD0iIzQyODVmNCIvPgo8cGF0aCBkPSJNNC41IDQuNUgxMS41VjUuNUg0LjVWNC41WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTQuNSA2LjVIMTEuNVY3LjVINC41VjYuNVoiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik00LjUgOC41SDkuNVY5LjVINC41VjguNVoiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik00LjUgMTAuNUgxMS41VjExLjVINC41VjEwLjVaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K",
-    "48": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQ4IiBoZWlnaHQ9IjQ4IiByeD0iNiIgZmlsbD0iIzQyODVmNCIvPgo8cGF0aCBkPSJNMTMuNSAxMy41SDM0LjVWMTYuNUgxMy41VjEzLjVaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTMuNSAxOS41SDM0LjVWMjIuNUgxMy41VjE5LjVaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTMuNSAyNS41SDI4LjVWMjguNUgxMy41VjI1LjVaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNMTMuNSAzMS41SDM0LjVWMzQuNUgxMy41VjMxLjVaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K",
-    "128": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTI4IiBoZWlnaHQ9IjEyOCIgdmlld0JveD0iMCAwIDEyOCAxMjgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIxMjgiIGhlaWdodD0iMTI4IiByeD0iMTYiIGZpbGw9IiM0Mjg1ZjQiLz4KPHBhdGggZD0iTTM2IDM2SDkyVjQ4SDM2VjM2WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTM2IDUySDkyVjY0SDM2VjUyWiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTM2IDY4SDc2VjgwSDM2VjY4WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTM2IDg0SDkyVjk2SDM2Vjg0WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+Cg=="
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
   }
 }

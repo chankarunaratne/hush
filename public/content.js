@@ -7,8 +7,7 @@ class QuickScribeReader {
     this.cachedContent = null;
     this.cachedSummary = null;
     this.isActive = false;
-    this.apiUrl =
-      "https://quickscribe-gl7p4e0o8-chandima-karunaratnes-projects.vercel.app/api/summarize";
+    this.apiUrl = "https://quickscribe-api.vercel.app/api/summarize";
 
     this.init();
   }
@@ -212,23 +211,36 @@ class QuickScribeReader {
       // Prepare content (limit to 4000 characters)
       const content = this.cachedContent.text.substring(0, 4000);
 
+      // Create request body with additional metadata as suggested by CTO
+      const requestBody = {
+        content: content,
+        title: this.cachedContent.title || document.title,
+        author: this.cachedContent.byline || "Unknown",
+      };
+
+      console.log("Sending request to API:", requestBody);
+
       const response = await fetch(this.apiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ content }),
-        timeout: 30000, // 30 second timeout
+        body: JSON.stringify(requestBody),
       });
 
+      console.log("API Response status:", response.status);
+
       if (!response.ok) {
-        throw new Error(`API request failed: ${response.status}`);
+        throw new Error(
+          `API request failed: ${response.status} ${response.statusText}`
+        );
       }
 
       const data = await response.json();
+      console.log("API Response data:", data);
 
       if (!data.summary) {
-        throw new Error("Invalid response from API");
+        throw new Error("Invalid response from API - no summary field");
       }
 
       // Cache the summary
@@ -238,7 +250,15 @@ class QuickScribeReader {
       this.displaySummary(data);
     } catch (error) {
       console.error("Summary generation failed:", error);
-      this.showError("Failed to generate summary. Please try again.");
+
+      // More specific error messages
+      if (error.name === "TypeError" && error.message.includes("fetch")) {
+        this.showError("Network error. Please check your internet connection.");
+      } else if (error.message.includes("API request failed")) {
+        this.showError(`API error: ${error.message}`);
+      } else {
+        this.showError("Failed to generate summary. Please try again.");
+      }
     } finally {
       // Restore button state
       summaryBtn.disabled = false;
@@ -292,8 +312,16 @@ class QuickScribeReader {
       summaryMeta.appendChild(wordSpan);
     }
 
-    const summaryText = document.createElement("p");
-    summaryText.textContent = summaryData.summary;
+    const summaryText = document.createElement("div");
+
+    // Format bullet points nicely
+    const lines = summaryData.summary.split("•").filter(Boolean);
+    lines.forEach((line) => {
+      const bullet = document.createElement("p");
+      bullet.textContent = "• " + line.replace(/\*\*/g, "").trim();
+      bullet.style.marginBottom = "8px";
+      summaryText.appendChild(bullet);
+    });
 
     summarySection.appendChild(summaryTitle);
     summarySection.appendChild(summaryMeta);

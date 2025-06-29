@@ -378,34 +378,6 @@ class QuickScribeReader {
     const summaryTitle = document.createElement("h3");
     summaryTitle.textContent = "AI Summary";
 
-    const summaryMeta = document.createElement("div");
-    summaryMeta.className = "quickscribe-summary-meta";
-
-    if (summaryData.title) {
-      const titleSpan = document.createElement("span");
-      titleSpan.innerHTML = `<strong>Title:</strong> ${summaryData.title}`;
-      summaryMeta.appendChild(titleSpan);
-    }
-
-    if (summaryData.author) {
-      const authorSpan = document.createElement("span");
-      authorSpan.innerHTML = `<strong>Author:</strong> ${summaryData.author}`;
-      summaryMeta.appendChild(authorSpan);
-    }
-
-    if (summaryData.datePublished) {
-      const dateSpan = document.createElement("span");
-      const date = new Date(summaryData.datePublished).toLocaleDateString();
-      dateSpan.innerHTML = `<strong>Published:</strong> ${date}`;
-      summaryMeta.appendChild(dateSpan);
-    }
-
-    if (summaryData.wordCount) {
-      const wordSpan = document.createElement("span");
-      wordSpan.innerHTML = `<strong>Words:</strong> ${summaryData.wordCount}`;
-      summaryMeta.appendChild(wordSpan);
-    }
-
     const summaryText = document.createElement("div");
 
     // Format bullet points nicely
@@ -418,7 +390,6 @@ class QuickScribeReader {
     });
 
     summarySection.appendChild(summaryTitle);
-    summarySection.appendChild(summaryMeta);
     summarySection.appendChild(summaryText);
 
     // Insert summary at the top of content area

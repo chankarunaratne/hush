@@ -321,7 +321,7 @@
   height: 36px;
   min-height: 36px;
   max-height: 36px;
-  padding: 8px 16px;
+  padding: 8px 12px;
   transition: background 0.2s, box-shadow 0.2s;
   outline: none;
   box-shadow: 0px 1px 2px 0px rgba(164, 172, 185, 0.24),

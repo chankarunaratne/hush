@@ -176,78 +176,11 @@ class QuickScribeReader {
     const contentArea = document.createElement("div");
     contentArea.className = "quickscribe-reader-content";
 
-    // Extract root domain
-    function getRootDomain(hostname) {
-      // Remove subdomains, keep only the last two parts (e.g., theverge.com)
-      const parts = hostname.split(".");
-      if (parts.length > 2) {
-        return parts.slice(-2).join(".");
-      }
-      return hostname;
-    }
-    const rootDomain = getRootDomain(window.location.hostname);
-
-    // Article source (domain)
-    const sourceEl = document.createElement("div");
-    sourceEl.className = "quickscribe-article-source";
-    sourceEl.textContent = rootDomain;
-    contentArea.appendChild(sourceEl);
-
-    // Article title
-    if (content.title) {
-      const titleEl = document.createElement("h1");
-      titleEl.className = "quickscribe-article-title";
-      titleEl.textContent = content.title;
-      contentArea.appendChild(titleEl);
-    }
-
-    // Article subtitle (optional)
-    let subtitle = null;
-    if (content.excerpt && content.excerpt.trim().length > 0) {
-      subtitle = content.excerpt.trim();
-    } else {
-      // Try meta description
-      const metaDesc = document.querySelector('meta[name="description"]');
-      if (metaDesc && metaDesc.content && metaDesc.content.trim().length > 0) {
-        subtitle = metaDesc.content.trim();
-      } else {
-        // Try visible subtitle elements inside <article>
-        const articleEl = document.querySelector("article");
-        let subtitleEl = null;
-        if (articleEl) {
-          subtitleEl =
-            articleEl.querySelector(".subtitle") ||
-            articleEl.querySelector("h2") ||
-            articleEl.querySelector(".article-subtitle");
-        }
-        if (
-          subtitleEl &&
-          subtitleEl.textContent &&
-          subtitleEl.textContent.trim().length > 0
-        ) {
-          subtitle = subtitleEl.textContent.trim();
-        }
-      }
-    }
-    if (subtitle) {
-      const subtitleEl = document.createElement("div");
-      subtitleEl.className = "quickscribe-subtitle";
-      subtitleEl.textContent = subtitle;
-      contentArea.appendChild(subtitleEl);
-    }
-
-    const article = document.createElement("div");
-    article.className = "quickscribe-article";
-
-    // Use HTML if available, otherwise fallback to formatted text
-    if (content.html) {
-      article.innerHTML = content.html;
-      this.stripInlineStyles(article);
-    } else {
-      article.innerHTML = this.formatContent(content.text);
-    }
-
-    contentArea.appendChild(article);
+    // Show loading spinner initially
+    const loadingDiv = document.createElement("div");
+    loadingDiv.className = "quickscribe-loading";
+    loadingDiv.textContent = "Loading article...";
+    contentArea.appendChild(loadingDiv);
 
     // Assemble overlay
     this.overlay.appendChild(navbar); // Use new navbar
@@ -264,6 +197,93 @@ class QuickScribeReader {
     };
     document.addEventListener("keydown", handleEscape);
     this.overlay.dataset.escapeHandler = "true";
+
+    // After 1s, remove spinner and inject article content with animation
+    setTimeout(() => {
+      // Remove loading spinner
+      loadingDiv.remove();
+
+      // Article source (domain)
+      function getRootDomain(hostname) {
+        const parts = hostname.split(".");
+        if (parts.length > 2) {
+          return parts.slice(-2).join(".");
+        }
+        return hostname;
+      }
+      const rootDomain = getRootDomain(window.location.hostname);
+      const sourceEl = document.createElement("div");
+      sourceEl.className = "quickscribe-article-source";
+      sourceEl.textContent = rootDomain;
+      contentArea.appendChild(sourceEl);
+
+      // Article title
+      if (content.title) {
+        const titleEl = document.createElement("h1");
+        titleEl.className = "quickscribe-article-title";
+        titleEl.textContent = content.title;
+        contentArea.appendChild(titleEl);
+      }
+
+      // Article subtitle (optional)
+      let subtitle = null;
+      if (content.excerpt && content.excerpt.trim().length > 0) {
+        subtitle = content.excerpt.trim();
+      } else {
+        const metaDesc = document.querySelector('meta[name="description"]');
+        if (
+          metaDesc &&
+          metaDesc.content &&
+          metaDesc.content.trim().length > 0
+        ) {
+          subtitle = metaDesc.content.trim();
+        } else {
+          const articleEl = document.querySelector("article");
+          let subtitleEl = null;
+          if (articleEl) {
+            subtitleEl =
+              articleEl.querySelector(".subtitle") ||
+              articleEl.querySelector("h2") ||
+              articleEl.querySelector(".article-subtitle");
+          }
+          if (
+            subtitleEl &&
+            subtitleEl.textContent &&
+            subtitleEl.textContent.trim().length > 0
+          ) {
+            subtitle = subtitleEl.textContent.trim();
+          }
+        }
+      }
+      if (subtitle) {
+        const subtitleEl = document.createElement("div");
+        subtitleEl.className = "quickscribe-subtitle";
+        subtitleEl.textContent = subtitle;
+        contentArea.appendChild(subtitleEl);
+      }
+
+      // Article content with animation
+      const articleWrapper = document.createElement("div");
+      articleWrapper.className = "quickscribe-article";
+      articleWrapper.style.opacity = "0";
+      articleWrapper.style.transform = "translateY(20px)";
+      articleWrapper.style.transition =
+        "opacity 400ms ease-out, transform 400ms ease-out";
+
+      if (content.html) {
+        articleWrapper.innerHTML = content.html;
+        this.stripInlineStyles(articleWrapper);
+      } else {
+        articleWrapper.innerHTML = this.formatContent(content.text);
+      }
+      contentArea.appendChild(articleWrapper);
+
+      // Trigger animation
+      setTimeout(() => {
+        articleWrapper.style.opacity = "1";
+        articleWrapper.style.transform = "translateY(0)";
+      }, 10);
+    }, 1000);
   }
 
   formatContent(text) {

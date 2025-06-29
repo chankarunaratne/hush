@@ -15,6 +15,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-y: auto;
+  animation: qs-fade-in 300ms ease-out;
 }
 
 .quickscribe-reader-header {
@@ -96,6 +97,7 @@
   margin: 0 auto;
   width: 100%;
   box-sizing: border-box;
+  animation: qs-content-in 400ms ease-out 150ms both;
 }
 
 .quickscribe-article {
@@ -280,6 +282,7 @@
   position: sticky;
   top: 0;
   z-index: 10;
+  animation: qs-fade-in 300ms ease-out;
 }
 
 .qs-navbar-logo {
@@ -514,4 +517,24 @@
 
 .quickscribe-error {
   font-size: 15px !important;
+}
+
+@keyframes qs-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes qs-content-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

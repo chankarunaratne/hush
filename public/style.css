@@ -451,18 +451,18 @@
 }
 
 .quickscribe-article-title {
-  font-size: 28px;
+  font-size: 36px;
   font-weight: 700;
-  color: #111827;
+  color: #0d0d12;
   margin-bottom: 1em;
-  line-height: 1.4;
+  line-height: 42px;
 }
 
 .quickscribe-article-source {
-  font-size: 15px;
-  color: #6b7280;
+  font-size: 14px;
+  color: #666d80;
   margin-bottom: 0.5em;
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: 0.01em;
 }
 
@@ -472,5 +472,4 @@
   color: #374151;
   margin-bottom: 1.2em;
   line-height: 1.5;
-  font-style: italic;
 }

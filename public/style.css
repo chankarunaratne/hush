@@ -284,7 +284,7 @@
   justify-content: space-between;
   background: #fff;
   box-shadow: 0px 1px 4px 0px rgba(12, 12, 13, 0.05);
-  padding: 0 32px;
+  padding: 0 16px;
   height: 64px;
   min-height: 64px;
   border-bottom: 1px solid #e5e7eb;
@@ -464,4 +464,13 @@
   margin-bottom: 0.5em;
   font-weight: 500;
   letter-spacing: 0.01em;
+}
+
+.quickscribe-article-subtitle {
+  font-size: 19px;
+  font-weight: 400;
+  color: #374151;
+  margin-bottom: 1.2em;
+  line-height: 1.5;
+  font-style: italic;
 }

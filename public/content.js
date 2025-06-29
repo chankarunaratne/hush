@@ -201,6 +201,41 @@ class QuickScribeReader {
       contentArea.appendChild(titleEl);
     }
 
+    // Article subtitle (optional)
+    let subtitle = null;
+    if (content.excerpt && content.excerpt.trim().length > 0) {
+      subtitle = content.excerpt.trim();
+    } else {
+      // Try meta description
+      const metaDesc = document.querySelector('meta[name="description"]');
+      if (metaDesc && metaDesc.content && metaDesc.content.trim().length > 0) {
+        subtitle = metaDesc.content.trim();
+      } else {
+        // Try visible subtitle elements inside <article>
+        const articleEl = document.querySelector("article");
+        let subtitleEl = null;
+        if (articleEl) {
+          subtitleEl =
+            articleEl.querySelector(".subtitle") ||
+            articleEl.querySelector("h2") ||
+            articleEl.querySelector(".article-subtitle");
+        }
+        if (
+          subtitleEl &&
+          subtitleEl.textContent &&
+          subtitleEl.textContent.trim().length > 0
+        ) {
+          subtitle = subtitleEl.textContent.trim();
+        }
+      }
+    }
+    if (subtitle) {
+      const subtitleEl = document.createElement("div");
+      subtitleEl.className = "quickscribe-article-subtitle";
+      subtitleEl.textContent = subtitle;
+      contentArea.appendChild(subtitleEl);
+    }
+
     const article = document.createElement("div");
     article.className = "quickscribe-article";
 

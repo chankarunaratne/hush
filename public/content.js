@@ -413,9 +413,9 @@ class QuickScribeReader {
     summarySection.appendChild(summaryTitle);
     summarySection.appendChild(summaryText);
 
-    // Insert summary at the top of content area
-    const article = contentArea.querySelector(".quickscribe-article");
-    contentArea.insertBefore(summarySection, article);
+    // Insert summary at the very top of content area, before any other content
+    const firstChild = contentArea.firstChild;
+    contentArea.insertBefore(summarySection, firstChild);
 
     // Scroll to summary
     summarySection.scrollIntoView({ behavior: "smooth" });

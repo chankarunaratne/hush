@@ -164,7 +164,7 @@
 }
 
 .quickscribe-summary {
-  margin-top: 2em;
+  margin-bottom: 2em;
   padding: 24px;
   background: #f8fafc;
   border-radius: 8px;
@@ -240,6 +240,11 @@
 
   .quickscribe-article {
     font-size: 15px;
+  }
+
+  .quickscribe-summary {
+    padding: 20px;
+    margin-bottom: 1.5em;
   }
 }
 

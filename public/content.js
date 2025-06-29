@@ -66,6 +66,7 @@ class QuickScribeReader {
           content = {
             title: article.title || document.title,
             text: article.textContent,
+            html: article.content,
             excerpt: article.excerpt,
             byline: article.byline,
           };
@@ -82,6 +83,7 @@ class QuickScribeReader {
         content = {
           title: document.title,
           text: articleElement.textContent,
+          html: articleElement.innerHTML,
           excerpt: "",
           byline: "",
         };
@@ -95,6 +97,7 @@ class QuickScribeReader {
         content = {
           title: document.title,
           text: bodyText,
+          html: null,
           excerpt: "",
           byline: "",
         };
@@ -176,9 +179,12 @@ class QuickScribeReader {
     const article = document.createElement("div");
     article.className = "quickscribe-article";
 
-    // Format the content for better readability
-    const formattedContent = this.formatContent(content.text);
-    article.innerHTML = formattedContent;
+    // Use HTML if available, otherwise fallback to formatted text
+    if (content.html) {
+      article.innerHTML = content.html;
+    } else {
+      article.innerHTML = this.formatContent(content.text);
+    }
 
     contentArea.appendChild(article);
 

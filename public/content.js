@@ -231,7 +231,7 @@ class QuickScribeReader {
     }
     if (subtitle) {
       const subtitleEl = document.createElement("div");
-      subtitleEl.className = "quickscribe-article-subtitle";
+      subtitleEl.className = "quickscribe-subtitle";
       subtitleEl.textContent = subtitle;
       contentArea.appendChild(subtitleEl);
     }
@@ -242,6 +242,7 @@ class QuickScribeReader {
     // Use HTML if available, otherwise fallback to formatted text
     if (content.html) {
       article.innerHTML = content.html;
+      this.stripInlineStyles(article);
     } else {
       article.innerHTML = this.formatContent(content.text);
     }
@@ -398,6 +399,8 @@ class QuickScribeReader {
 
     // Scroll to summary
     summarySection.scrollIntoView({ behavior: "smooth" });
+
+    this.stripInlineStyles(summarySection);
   }
 
   showError(message) {
@@ -427,6 +430,8 @@ class QuickScribeReader {
         errorDiv.parentNode.removeChild(errorDiv);
       }
     }, 5000);
+
+    this.stripInlineStyles(errorDiv);
   }
 
   closeReader() {
@@ -448,6 +453,14 @@ class QuickScribeReader {
     this.closeReader();
     this.cachedContent = null;
     this.cachedSummary = null;
+  }
+
+  // Helper to strip inline styles from an element and its children
+  stripInlineStyles(element) {
+    if (!element) return;
+    const all = element.querySelectorAll("*");
+    all.forEach((el) => el.removeAttribute("style"));
+    element.removeAttribute("style");
   }
 }
 

@@ -176,6 +176,31 @@ class QuickScribeReader {
     const contentArea = document.createElement("div");
     contentArea.className = "quickscribe-reader-content";
 
+    // Extract root domain
+    function getRootDomain(hostname) {
+      // Remove subdomains, keep only the last two parts (e.g., theverge.com)
+      const parts = hostname.split(".");
+      if (parts.length > 2) {
+        return parts.slice(-2).join(".");
+      }
+      return hostname;
+    }
+    const rootDomain = getRootDomain(window.location.hostname);
+
+    // Article source (domain)
+    const sourceEl = document.createElement("div");
+    sourceEl.className = "quickscribe-article-source";
+    sourceEl.textContent = rootDomain;
+    contentArea.appendChild(sourceEl);
+
+    // Article title
+    if (content.title) {
+      const titleEl = document.createElement("h1");
+      titleEl.className = "quickscribe-article-title";
+      titleEl.textContent = content.title;
+      contentArea.appendChild(titleEl);
+    }
+
     const article = document.createElement("div");
     article.className = "quickscribe-article";
 

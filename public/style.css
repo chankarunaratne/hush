@@ -6,12 +6,13 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.8);
+  background: #ffffff;
   z-index: 2147483647;
   display: flex;
   flex-direction: column;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, sans-serif;
+  overflow-y: auto;
 }
 
 .quickscribe-reader-header {
@@ -87,7 +88,6 @@
 
 .quickscribe-reader-content {
   flex: 1;
-  overflow-y: auto;
   background: #ffffff;
   padding: 32px;
   max-width: 800px;
@@ -288,8 +288,9 @@
   height: 64px;
   min-height: 64px;
   border-bottom: 1px solid #e5e7eb;
-  position: relative;
-  z-index: 2;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .qs-navbar-logo {
@@ -302,7 +303,7 @@
 .qs-navbar-controls {
   display: flex;
   flex-direction: row;
-  gap: 16px;
+  gap: 8px;
   align-items: center;
 }
 
@@ -317,10 +318,10 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  height: 40px;
-  min-height: 40px;
-  max-height: 40px;
-  padding: 8px 20px;
+  height: 36px;
+  min-height: 36px;
+  max-height: 36px;
+  padding: 8px 16px;
   transition: background 0.2s, box-shadow 0.2s;
   outline: none;
   box-shadow: 0px 1px 2px 0px rgba(164, 172, 185, 0.24),

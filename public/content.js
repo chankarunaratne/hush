@@ -297,14 +297,17 @@ class QuickScribeReader {
   }
 
   async generateSummary() {
-    if (!this.cachedContent) {
-      this.showError("No content available for summarization.");
-      return;
-    }
-
-    // Check if we already have a cached summary
+    // If summary is already cached, just toggle visibility
     if (this.cachedSummary) {
-      this.displaySummary(this.cachedSummary);
+      const summaryEl = this.overlay.querySelector(".quickscribe-summary");
+      if (summaryEl) {
+        const isVisible = summaryEl.style.display !== "none";
+        summaryEl.style.display = isVisible ? "none" : "";
+        this.updateSummaryButton(!isVisible);
+        if (!isVisible) {
+          summaryEl.scrollIntoView({ behavior: "smooth" });
+        }
+      }
       return;
     }
 
@@ -316,7 +319,6 @@ class QuickScribeReader {
     // Show loading state
     summaryBtn.disabled = true;
     summaryBtn.classList.add("generating");
-    // Hide icon, show spinner (optional)
     if (iconSpan) iconSpan.style.display = "none";
     labelSpan.textContent = "Generating";
 
@@ -359,7 +361,7 @@ class QuickScribeReader {
       // Cache the summary
       this.cachedSummary = data;
 
-      // Display the summary
+      // Display the summary. This will also update the button state.
       this.displaySummary(data);
     } catch (error) {
       console.error("Summary generation failed:", error);
@@ -372,12 +374,33 @@ class QuickScribeReader {
       } else {
         this.showError("Failed to generate summary. Please try again.");
       }
+      // On failure, restore button to its initial state
+      this.updateSummaryButton(false);
     } finally {
-      // Restore button state and icon
+      // Restore button from loading state, but keep its current text/icon
       summaryBtn.disabled = false;
       summaryBtn.classList.remove("generating");
       if (iconSpan) iconSpan.style.display = "flex";
-      labelSpan.textContent = originalLabel;
+    }
+  }
+
+  updateSummaryButton(isVisible) {
+    const summaryBtn = this.overlay.querySelector(".qs-btn-primary");
+    if (!summaryBtn) return;
+
+    const iconSpan = summaryBtn.querySelector(".qs-btn-icon");
+    const labelSpan = summaryBtn.querySelector(".qs-btn-label");
+    const iconImg = iconSpan ? iconSpan.querySelector(".qs-btn-svg") : null;
+
+    if (isVisible) {
+      labelSpan.textContent = "Hide AI Summary";
+      if (iconImg) iconImg.src = chrome.runtime.getURL("assets/eye-slash.svg");
+      summaryBtn.classList.add("summary-visible");
+    } else {
+      labelSpan.textContent = "Summarize with AI";
+      if (iconImg)
+        iconImg.src = chrome.runtime.getURL("assets/summary-icon.svg");
+      summaryBtn.classList.remove("summary-visible");
     }
   }
 
@@ -432,6 +455,9 @@ class QuickScribeReader {
     // Insert summary at the very top of content area, before any other content
     const firstChild = contentArea.firstChild;
     contentArea.insertBefore(summarySection, firstChild);
+
+    // After displaying, update button to "Hide" state
+    this.updateSummaryButton(true);
 
     // Scroll to summary
     summarySection.scrollIntoView({ behavior: "smooth" });

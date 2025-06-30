@@ -297,14 +297,17 @@ class QuickScribeReader {
   }
 
   async generateSummary() {
-    // If summary is already cached, just toggle visibility
+    // If summary is already cached, just toggle visibility with animation
     if (this.cachedSummary) {
       const summaryEl = this.overlay.querySelector(".quickscribe-summary");
       if (summaryEl) {
-        const isVisible = summaryEl.style.display !== "none";
-        summaryEl.style.display = isVisible ? "none" : "";
-        this.updateSummaryButton(!isVisible);
-        if (!isVisible) {
+        const isCurrentlyVisible =
+          !summaryEl.classList.contains("summary-hidden");
+        summaryEl.classList.toggle("summary-hidden", isCurrentlyVisible);
+        this.updateSummaryButton(!isCurrentlyVisible);
+
+        // If we are making it visible, scroll to it
+        if (!isCurrentlyVisible) {
           summaryEl.scrollIntoView({ behavior: "smooth" });
         }
       }
@@ -415,9 +418,9 @@ class QuickScribeReader {
       existingSummary.remove();
     }
 
-    // Create summary section
+    // Create summary section and start it as hidden for animation
     const summarySection = document.createElement("div");
-    summarySection.className = "quickscribe-summary";
+    summarySection.className = "quickscribe-summary summary-hidden";
 
     // --- New Figma-style label row ---
     const labelRow = document.createElement("div");
@@ -459,8 +462,11 @@ class QuickScribeReader {
     // After displaying, update button to "Hide" state
     this.updateSummaryButton(true);
 
-    // Scroll to summary
-    summarySection.scrollIntoView({ behavior: "smooth" });
+    // After inserting, remove the hidden class to trigger the fade-in animation
+    setTimeout(() => {
+      summarySection.classList.remove("summary-hidden");
+      summarySection.scrollIntoView({ behavior: "smooth" });
+    }, 10); // Small delay to allow CSS transition
 
     this.stripInlineStyles(summarySection);
   }

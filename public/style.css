@@ -170,10 +170,25 @@
   background: #f6f8fa;
   border: 1px solid #eceff3;
   border-radius: 14px;
-  padding: 20px 24px 20px 24px;
+  padding: 20px 24px;
   margin-bottom: 2em;
-  margin-top: 0;
   box-shadow: none;
+
+  /* Animation */
+  overflow: hidden;
+  max-height: 1000px; /* Adjust if summaries can be longer */
+  opacity: 1;
+  transition: all 0.4s ease-in-out;
+}
+
+.quickscribe-summary.summary-hidden {
+  opacity: 0;
+  max-height: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  border-width: 0;
+  pointer-events: none;
 }
 
 .quickscribe-summary-label-row {

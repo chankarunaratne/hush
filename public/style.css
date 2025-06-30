@@ -6,7 +6,7 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: #ffffff;
+  background: #f6f8fa;
   z-index: 2147483647;
   display: flex;
   flex-direction: column;
@@ -98,6 +98,9 @@
   width: 100%;
   box-sizing: border-box;
   animation: qs-content-in 400ms ease-out 150ms both;
+  margin-top: 32px;
+  box-shadow: 0px 1px 4px 0px rgba(12, 12, 13, 0.05);
+  border-radius: 16px;
 }
 
 .quickscribe-article {
@@ -164,17 +167,49 @@
 }
 
 .quickscribe-summary {
+  background: #f6f8fa;
+  border: 1px solid #eceff3;
+  border-radius: 14px;
+  padding: 20px 24px 20px 24px;
   margin-bottom: 2em;
-  padding: 24px;
-  background: #f8fafc;
-  border-radius: 8px;
-  border-left: 4px solid #3b82f6;
+  margin-top: 0;
+  box-shadow: none;
 }
 
-.quickscribe-summary h3 {
-  margin-top: 0;
-  color: #1e40af;
-  font-size: 1.2em;
+.quickscribe-summary-label-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.quickscribe-summary-icon {
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+}
+
+.quickscribe-summary-label-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: #36394a;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+}
+
+.quickscribe-summary-bullets {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.quickscribe-summary-bullet {
+  font-size: 16px;
+  color: #36394a;
+  line-height: 1.7;
+  font-weight: 400;
+  margin: 0;
+  padding: 0;
 }
 
 .quickscribe-loading {
@@ -243,8 +278,15 @@
   }
 
   .quickscribe-summary {
-    padding: 20px;
-    margin-bottom: 1.5em;
+    padding: 16px 12px 16px 12px;
+    border-radius: 10px;
+  }
+  .quickscribe-summary-label-row {
+    margin-bottom: 14px;
+  }
+  .quickscribe-summary-bullet {
+    font-size: 15px;
+    line-height: 1.6;
   }
 }
 

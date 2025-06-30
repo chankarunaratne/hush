@@ -396,21 +396,37 @@ class QuickScribeReader {
     const summarySection = document.createElement("div");
     summarySection.className = "quickscribe-summary";
 
-    const summaryTitle = document.createElement("h3");
-    summaryTitle.textContent = "AI Summary";
+    // --- New Figma-style label row ---
+    const labelRow = document.createElement("div");
+    labelRow.className = "quickscribe-summary-label-row";
 
+    // Icon
+    const icon = document.createElement("img");
+    icon.src = chrome.runtime.getURL("assets/summary-icon.svg");
+    icon.alt = "Summary Icon";
+    icon.className = "quickscribe-summary-icon";
+
+    // Label text
+    const labelText = document.createElement("span");
+    labelText.className = "quickscribe-summary-label-text";
+    labelText.textContent = "AI Summary";
+
+    labelRow.appendChild(icon);
+    labelRow.appendChild(labelText);
+    summarySection.appendChild(labelRow);
+
+    // --- Bullet points ---
     const summaryText = document.createElement("div");
+    summaryText.className = "quickscribe-summary-bullets";
 
-    // Format bullet points nicely
     const lines = summaryData.summary.split("•").filter(Boolean);
     lines.forEach((line) => {
       const bullet = document.createElement("p");
+      bullet.className = "quickscribe-summary-bullet";
       bullet.textContent = "• " + line.replace(/\*\*/g, "").trim();
-      bullet.style.marginBottom = "8px";
       summaryText.appendChild(bullet);
     });
 
-    summarySection.appendChild(summaryTitle);
     summarySection.appendChild(summaryText);
 
     // Insert summary at the very top of content area, before any other content

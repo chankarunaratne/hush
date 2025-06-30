@@ -306,9 +306,9 @@ class QuickScribeReader {
         summaryEl.classList.toggle("summary-hidden", isCurrentlyVisible);
         this.updateSummaryButton(!isCurrentlyVisible);
 
-        // If we are making it visible, scroll to it
+        // If we are making it visible, scroll to the top of the overlay
         if (!isCurrentlyVisible) {
-          summaryEl.scrollIntoView({ behavior: "smooth" });
+          this.overlay.scrollTo({ top: 0, behavior: "smooth" });
         }
       }
       return;
@@ -465,7 +465,8 @@ class QuickScribeReader {
     // After inserting, remove the hidden class to trigger the fade-in animation
     setTimeout(() => {
       summarySection.classList.remove("summary-hidden");
-      summarySection.scrollIntoView({ behavior: "smooth" });
+      // Scroll to the top of the overlay to ensure it's in view
+      this.overlay.scrollTo({ top: 0, behavior: "smooth" });
     }, 10); // Small delay to allow CSS transition
 
     this.stripInlineStyles(summarySection);

@@ -151,6 +151,21 @@ class QuickScribeReader {
     `;
     summaryBtn.addEventListener("click", () => this.generateSummary());
 
+    // --- Dark mode toggle button (UI only) ---
+    const darkModeBtn = document.createElement("button");
+    darkModeBtn.className = "qs-btn qs-btn-darkmode";
+    darkModeBtn.type = "button";
+    darkModeBtn.setAttribute("aria-label", "Toggle dark mode");
+    darkModeBtn.setAttribute("role", "button");
+    darkModeBtn.innerHTML = `
+      <span class="qs-btn-darkmode-icon" aria-hidden="true">
+        <img src="${chrome.runtime.getURL(
+          "assets/light.svg"
+        )}" alt="Toggle dark mode" class="qs-btn-darkmode-svg" />
+      </span>
+    `;
+    // No click handler yet (UI only)
+
     // Close reader button
     const closeBtn = document.createElement("button");
     closeBtn.className = "qs-btn qs-btn-secondary";
@@ -166,6 +181,7 @@ class QuickScribeReader {
     closeBtn.addEventListener("click", () => this.closeReader());
 
     navControls.appendChild(summaryBtn);
+    navControls.appendChild(darkModeBtn);
     navControls.appendChild(closeBtn);
 
     navbar.appendChild(logo);

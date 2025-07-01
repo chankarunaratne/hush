@@ -600,3 +600,38 @@
     transform: translateY(0);
   }
 }
+
+.qs-btn-darkmode {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  max-width: 32px;
+  max-height: 32px;
+  padding: 10px;
+  border-radius: 8px;
+  background: #f6f8fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none;
+  border: none;
+  transition: background 0.2s;
+}
+.qs-btn-darkmode:hover,
+.qs-btn-darkmode:focus {
+  background: #d1d5db;
+  cursor: pointer;
+}
+.qs-btn-darkmode-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+}
+.qs-btn-darkmode-svg {
+  width: 14px;
+  height: 14px;
+  display: block;
+}

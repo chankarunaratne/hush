@@ -608,8 +608,8 @@
   min-height: 32px;
   max-width: 32px;
   max-height: 32px;
-  padding: 10px;
   border-radius: 8px;
+  padding: 6px;
   background: #f6f8fa;
   display: flex;
   align-items: center;
@@ -627,8 +627,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
 }
 .qs-btn-darkmode-svg {
   width: 14px;

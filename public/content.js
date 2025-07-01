@@ -168,15 +168,16 @@ class QuickScribeReader {
 
     // Close reader button
     const closeBtn = document.createElement("button");
-    closeBtn.className = "qs-btn qs-btn-secondary";
+    closeBtn.className = "qs-btn qs-btn-darkmode qs-btn-closeicon";
     closeBtn.type = "button";
+    closeBtn.setAttribute("aria-label", "Close reader");
+    closeBtn.setAttribute("role", "button");
     closeBtn.innerHTML = `
-      <span class="qs-btn-icon" aria-hidden="true">
+      <span class="qs-btn-darkmode-icon" aria-hidden="true">
         <img src="${chrome.runtime.getURL(
           "assets/close-icon.svg"
-        )}" alt="Close" class="qs-btn-svg" />
+        )}" alt="Close" class="qs-btn-darkmode-svg" />
       </span>
-      <span class="qs-btn-label">Close reader</span>
     `;
     closeBtn.addEventListener("click", () => this.closeReader());
 

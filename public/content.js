@@ -164,7 +164,8 @@ class QuickScribeReader {
         )}" alt="Toggle dark mode" class="qs-btn-darkmode-svg" />
       </span>
     `;
-    // No click handler yet (UI only)
+    // Add dark mode toggle logic
+    darkModeBtn.addEventListener("click", () => this.toggleDarkMode());
 
     // Close reader button
     const closeBtn = document.createElement("button");
@@ -205,6 +206,9 @@ class QuickScribeReader {
 
     // Add to page
     document.body.appendChild(this.overlay);
+
+    // Set initial theme
+    this.applyInitialTheme();
 
     // Handle escape key
     const handleEscape = (e) => {
@@ -547,6 +551,37 @@ class QuickScribeReader {
     const all = element.querySelectorAll("*");
     all.forEach((el) => el.removeAttribute("style"));
     element.removeAttribute("style");
+  }
+
+  // --- DARK MODE LOGIC ---
+  applyInitialTheme() {
+    const saved = localStorage.getItem("qs_reader_theme");
+    const overlay = this.overlay;
+    let dark = false;
+    if (saved === "dark") dark = true;
+    else if (saved === "light") dark = false;
+    else dark = false; // Default to light mode on first visit
+    this.setDarkMode(dark);
+  }
+
+  toggleDarkMode() {
+    const overlay = this.overlay;
+    const isDark = overlay.getAttribute("data-theme") === "dark";
+    this.setDarkMode(!isDark);
+    localStorage.setItem("qs_reader_theme", !isDark ? "dark" : "light");
+  }
+
+  setDarkMode(enabled) {
+    const overlay = this.overlay;
+    const darkModeBtn = overlay.querySelector(".qs-btn-darkmode");
+    const iconImg = darkModeBtn ? darkModeBtn.querySelector("img") : null;
+    if (enabled) {
+      overlay.setAttribute("data-theme", "dark");
+      if (iconImg) iconImg.src = chrome.runtime.getURL("assets/dark.svg");
+    } else {
+      overlay.removeAttribute("data-theme");
+      if (iconImg) iconImg.src = chrome.runtime.getURL("assets/light.svg");
+    }
   }
 }
 

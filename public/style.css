@@ -737,8 +737,10 @@
 [data-theme="dark"] .qs-btn-darkmode-svg,
 [data-theme="dark"] .qs-btn-darkmode-icon img,
 [data-theme="dark"] .qs-btn-closeicon .qs-btn-darkmode-svg {
-  filter: none;
-  color: #cbd5e1;
+  filter: brightness(2) !important;
+  color: #e2e8f0 !important;
+  fill: #e2e8f0 !important;
+  stroke: #e2e8f0 !important;
 }
 [data-theme="dark"] .qs-btn-label {
   color: #e2e8f0 !important;
@@ -751,4 +753,53 @@
 }
 [data-theme="dark"] .quickscribe-reader-content::-webkit-scrollbar {
   background: #1e293b;
+}
+
+[data-theme="dark"] .quickscribe-reader-title {
+  color: #f8fafc !important;
+}
+[data-theme="dark"] .quickscribe-subtitle {
+  color: #e2e8f0 !important;
+}
+[data-theme="dark"] .quickscribe-article-source {
+  color: #94a3b8 !important;
+}
+[data-theme="dark"] .qs-btn-label,
+[data-theme="dark"] .qs-btn-primary,
+[data-theme="dark"] .qs-btn-secondary,
+[data-theme="dark"] .qs-btn-closeicon {
+  color: #e2e8f0 !important;
+}
+[data-theme="dark"] .quickscribe-article {
+  color: #d1d5db !important;
+}
+[data-theme="dark"] .quickscribe-summary {
+  color: #cbd5e1 !important;
+}
+[data-theme="dark"] .qs-navbar {
+  color: #e2e8f0 !important;
+}
+
+[data-theme="dark"] .quickscribe-reader-content .quickscribe-reader-title {
+  color: #f8fafc !important;
+}
+
+[data-theme="dark"] .quickscribe-summary {
+  background: #1e293b;
+  border: 1px solid #334155;
+  color: #cbd5e1 !important;
+  transition: background 0.3s, border 0.3s, color 0.3s, opacity 0.4s,
+    max-height 0.4s, padding 0.4s, margin 0.4s;
+  opacity: 1;
+  overflow: hidden;
+  max-height: 1000px;
+}
+[data-theme="dark"] .quickscribe-summary.summary-hidden {
+  opacity: 0;
+  max-height: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  border-width: 0;
+  pointer-events: none;
 }

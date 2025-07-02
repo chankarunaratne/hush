@@ -577,10 +577,10 @@ class QuickScribeReader {
     const iconImg = darkModeBtn ? darkModeBtn.querySelector("img") : null;
     if (enabled) {
       overlay.setAttribute("data-theme", "dark");
-      if (iconImg) iconImg.src = chrome.runtime.getURL("assets/dark.svg");
+      if (iconImg) iconImg.src = chrome.runtime.getURL("assets/light.svg"); // Show light icon in dark mode
     } else {
       overlay.removeAttribute("data-theme");
-      if (iconImg) iconImg.src = chrome.runtime.getURL("assets/light.svg");
+      if (iconImg) iconImg.src = chrome.runtime.getURL("assets/dark.svg"); // Show dark icon in light mode
     }
   }
 }

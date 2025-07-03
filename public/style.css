@@ -307,6 +307,9 @@
 
 /* Focus management for accessibility */
 .quickscribe-btn:focus {
+  outline: none;
+}
+.quickscribe-btn:focus-visible {
   outline: 2px solid #3b82f6;
   outline-offset: 2px;
 }
@@ -395,7 +398,7 @@
   padding-right: 10px;
 }
 .qs-btn-primary:hover,
-.qs-btn-primary:focus {
+.qs-btn-primary:focus-visible {
   background: #f6f8fa;
 }
 .qs-btn-primary .qs-btn-icon {
@@ -425,7 +428,7 @@
   padding-right: 10px;
 }
 .qs-btn-secondary:hover,
-.qs-btn-secondary:focus {
+.qs-btn-secondary:focus-visible {
   background: #e5e7eb;
 }
 .qs-btn-secondary .qs-btn-icon {
@@ -446,6 +449,9 @@
 }
 
 .qs-btn:focus {
+  outline: none;
+}
+.qs-btn:focus-visible {
   outline: 2px solid #3b82f6;
   outline-offset: 2px;
 }
@@ -619,7 +625,7 @@
   transition: background 0.2s;
 }
 .qs-btn-darkmode:hover,
-.qs-btn-darkmode:focus {
+.qs-btn-darkmode:focus-visible {
   background: #d1d5db;
   cursor: pointer;
 }
@@ -710,7 +716,7 @@
   color: #fff;
 }
 [data-theme="dark"] .qs-btn-primary:hover,
-[data-theme="dark"] .qs-btn-primary:focus {
+[data-theme="dark"] .qs-btn-primary:focus-visible {
   background: #2563eb;
 }
 [data-theme="dark"] .qs-btn-secondary {
@@ -718,7 +724,7 @@
   color: #e2e8f0;
 }
 [data-theme="dark"] .qs-btn-secondary:hover,
-[data-theme="dark"] .qs-btn-secondary:focus {
+[data-theme="dark"] .qs-btn-secondary:focus-visible {
   background: #475569;
 }
 [data-theme="dark"] .qs-btn-darkmode,
@@ -728,9 +734,9 @@
   transition: background 0.2s, color 0.2s;
 }
 [data-theme="dark"] .qs-btn-darkmode:hover,
-[data-theme="dark"] .qs-btn-darkmode:focus,
+[data-theme="dark"] .qs-btn-darkmode:focus-visible,
 [data-theme="dark"] .qs-btn-closeicon:hover,
-[data-theme="dark"] .qs-btn-closeicon:focus {
+[data-theme="dark"] .qs-btn-closeicon:focus-visible {
   background: #334155;
   color: #fff;
 }

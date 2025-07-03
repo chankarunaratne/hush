@@ -510,14 +510,6 @@
   box-shadow: none;
 }
 
-.quickscribe-article-title {
-  font-size: 36px;
-  font-weight: 700;
-  color: #0d0d12;
-  margin-bottom: 16px;
-  line-height: 42px;
-}
-
 .quickscribe-article-source {
   font-size: 14px;
   color: #666d80;
@@ -562,6 +554,7 @@
   font-style: normal !important;
   font-weight: 700 !important;
   font-size: 36px !important;
+  line-height: 42px !important;
 }
 
 .quickscribe-article-source {
@@ -644,19 +637,19 @@
 
 /* === DARK MODE (scoped to overlay) === */
 [data-theme="dark"].quickscribe-reader-overlay {
-  background: #0f172a;
+  background: #1d1d20;
   transition: background 0.3s;
 }
 [data-theme="dark"] .quickscribe-reader-content {
-  background: #1e293b;
+  background: #222325;
   color: #d1d5db;
   border-radius: 16px;
-  box-shadow: 0px 1px 4px 0px rgba(12, 12, 13, 0.1);
-  border: 1px solid #334155;
+  box-shadow: 0px 1px 4px 0px rgba(12, 12, 13, 0.05);
+  border: 1px solid #323334;
   transition: background 0.3s, color 0.3s, border 0.3s;
 }
 [data-theme="dark"] .quickscribe-article {
-  color: #d1d5db;
+  color: #d1d5dc;
 }
 [data-theme="dark"] .quickscribe-article h1,
 [data-theme="dark"] .quickscribe-article h2,
@@ -703,54 +696,36 @@
 [data-theme="dark"] .quickscribe-empty {
   color: #64748b;
 }
+
+/* Dark Mode Navbar */
 [data-theme="dark"] .qs-navbar {
-  background: #1e293b;
-  border-bottom: 1px solid #334155;
+  background: #1d1d20;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   transition: background 0.3s, border 0.3s;
+  color: #e2e8f0 !important;
 }
 [data-theme="dark"] .qs-navbar-logo {
   filter: brightness(0.9) grayscale(0.2);
 }
-[data-theme="dark"] .qs-btn-primary {
-  background: #3b82f6;
-  color: #fff;
+[data-theme="dark"] .qs-navbar .qs-btn {
+  background: #364153;
+  color: #eeeff0;
+  border: none;
+  box-shadow: none;
 }
-[data-theme="dark"] .qs-btn-primary:hover,
-[data-theme="dark"] .qs-btn-primary:focus-visible {
-  background: #2563eb;
+[data-theme="dark"] .qs-navbar .qs-btn:hover,
+[data-theme="dark"] .qs-navbar .qs-btn:focus-visible {
+  background: #4a5566;
+  color: #eeeff0;
 }
-[data-theme="dark"] .qs-btn-secondary {
-  background: #334155;
-  color: #e2e8f0;
+[data-theme="dark"] .qs-navbar .qs-btn-label {
+  color: #eeeff0 !important;
 }
-[data-theme="dark"] .qs-btn-secondary:hover,
-[data-theme="dark"] .qs-btn-secondary:focus-visible {
-  background: #475569;
+[data-theme="dark"] .qs-navbar .qs-btn img {
+  filter: brightness(0) invert(1);
 }
-[data-theme="dark"] .qs-btn-darkmode,
-[data-theme="dark"] .qs-btn-closeicon {
-  background: #1e293b;
-  color: #cbd5e1;
-  transition: background 0.2s, color 0.2s;
-}
-[data-theme="dark"] .qs-btn-darkmode:hover,
-[data-theme="dark"] .qs-btn-darkmode:focus-visible,
-[data-theme="dark"] .qs-btn-closeicon:hover,
-[data-theme="dark"] .qs-btn-closeicon:focus-visible {
-  background: #334155;
-  color: #fff;
-}
-[data-theme="dark"] .qs-btn-darkmode-svg,
-[data-theme="dark"] .qs-btn-darkmode-icon img,
-[data-theme="dark"] .qs-btn-closeicon .qs-btn-darkmode-svg {
-  filter: brightness(2) !important;
-  color: #e2e8f0 !important;
-  fill: #e2e8f0 !important;
-  stroke: #e2e8f0 !important;
-}
-[data-theme="dark"] .qs-btn-label {
-  color: #e2e8f0 !important;
-}
+
+/* Other Dark Mode Styles */
 [data-theme="dark"] .quickscribe-reader-content::-webkit-scrollbar-thumb {
   background: #475569;
 }
@@ -762,33 +737,23 @@
 }
 
 [data-theme="dark"] .quickscribe-reader-title {
-  color: #f8fafc !important;
-}
-[data-theme="dark"] .quickscribe-subtitle {
-  color: #e2e8f0 !important;
-}
-[data-theme="dark"] .quickscribe-article-source {
-  color: #94a3b8 !important;
+  color: #eeeef0 !important;
 }
 [data-theme="dark"] .quickscribe-article-title {
-  color: #f8fafc !important;
+  color: #eeeef0 !important;
 }
-[data-theme="dark"] .qs-btn-label,
-[data-theme="dark"] .qs-btn-primary,
-[data-theme="dark"] .qs-btn-secondary,
-[data-theme="dark"] .qs-btn-closeicon {
-  color: #e2e8f0 !important;
+[data-theme="dark"] .quickscribe-subtitle {
+  color: #d1d5dc !important;
+}
+[data-theme="dark"] .quickscribe-article-source {
+  color: #99a1af !important;
 }
 [data-theme="dark"] .quickscribe-article {
-  color: #d1d5db !important;
+  color: #d1d5dc !important;
 }
 [data-theme="dark"] .quickscribe-summary {
   color: #cbd5e1 !important;
 }
-[data-theme="dark"] .qs-navbar {
-  color: #e2e8f0 !important;
-}
-
 [data-theme="dark"] .quickscribe-reader-content .quickscribe-reader-title {
   color: #f8fafc !important;
 }
@@ -812,5 +777,3 @@
   border-width: 0;
   pointer-events: none;
 }
-
-/* --- this is a test 2 --- */

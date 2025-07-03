@@ -539,7 +539,6 @@
 .qs-navbar,
 .qs-btn,
 .qs-btn-label,
-.quickscribe-article-title,
 .quickscribe-article-source,
 .quickscribe-subtitle {
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -550,20 +549,21 @@
   color: inherit !important;
 }
 
+/* Special font rule for article title without color inheritance */
 .quickscribe-article-title {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, sans-serif !important;
+  font-style: normal !important;
   font-weight: 700 !important;
   font-size: 36px !important;
-  color: #0d0d12 !important;
 }
 
 .quickscribe-article-source {
   font-size: 14px !important;
-  color: #666d80 !important;
 }
 
 .quickscribe-subtitle {
   font-size: 20px !important;
-  color: #36394a !important;
   line-height: 30px !important;
   margin-bottom: 28px !important;
 }
@@ -763,6 +763,9 @@
 }
 [data-theme="dark"] .quickscribe-article-source {
   color: #94a3b8 !important;
+}
+[data-theme="dark"] .quickscribe-article-title {
+  color: #f8fafc !important;
 }
 [data-theme="dark"] .qs-btn-label,
 [data-theme="dark"] .qs-btn-primary,

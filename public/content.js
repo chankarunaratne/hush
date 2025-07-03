@@ -141,14 +141,24 @@ class QuickScribeReader {
     const summaryBtn = document.createElement("button");
     summaryBtn.className = "qs-btn qs-btn-primary";
     summaryBtn.type = "button";
-    summaryBtn.innerHTML = `
-      <span class="qs-btn-icon" aria-hidden="true">
-        <img src="${chrome.runtime.getURL(
-          "assets/summary-icon.svg"
-        )}" alt="Summarize" class="qs-btn-svg" />
-      </span>
-      <span class="qs-btn-label">Summarize with AI</span>
-    `;
+
+    const summaryBtnIcon = document.createElement("span");
+    summaryBtnIcon.className = "qs-btn-icon";
+    summaryBtnIcon.setAttribute("aria-hidden", "true");
+
+    const summaryBtnImg = document.createElement("img");
+    summaryBtnImg.src = chrome.runtime.getURL("assets/summary-icon.svg");
+    summaryBtnImg.alt = "Summarize";
+    summaryBtnImg.className = "qs-btn-svg";
+
+    summaryBtnIcon.appendChild(summaryBtnImg);
+
+    const summaryBtnLabel = document.createElement("span");
+    summaryBtnLabel.className = "qs-btn-label";
+    summaryBtnLabel.textContent = "Summarize with AI";
+
+    summaryBtn.appendChild(summaryBtnIcon);
+    summaryBtn.appendChild(summaryBtnLabel);
     summaryBtn.addEventListener("click", () => this.generateSummary());
 
     // --- Dark mode toggle button (UI only) ---
@@ -157,13 +167,18 @@ class QuickScribeReader {
     darkModeBtn.type = "button";
     darkModeBtn.setAttribute("aria-label", "Toggle dark mode");
     darkModeBtn.setAttribute("role", "button");
-    darkModeBtn.innerHTML = `
-      <span class="qs-btn-darkmode-icon" aria-hidden="true">
-        <img src="${chrome.runtime.getURL(
-          "assets/light.svg"
-        )}" alt="Toggle dark mode" class="qs-btn-darkmode-svg" />
-      </span>
-    `;
+
+    const darkModeBtnIcon = document.createElement("span");
+    darkModeBtnIcon.className = "qs-btn-darkmode-icon";
+    darkModeBtnIcon.setAttribute("aria-hidden", "true");
+
+    const darkModeBtnImg = document.createElement("img");
+    darkModeBtnImg.src = chrome.runtime.getURL("assets/light.svg");
+    darkModeBtnImg.alt = "Toggle dark mode";
+    darkModeBtnImg.className = "qs-btn-darkmode-svg";
+
+    darkModeBtnIcon.appendChild(darkModeBtnImg);
+    darkModeBtn.appendChild(darkModeBtnIcon);
     // Add dark mode toggle logic
     darkModeBtn.addEventListener("click", () => this.toggleDarkMode());
 
@@ -173,13 +188,18 @@ class QuickScribeReader {
     closeBtn.type = "button";
     closeBtn.setAttribute("aria-label", "Close reader");
     closeBtn.setAttribute("role", "button");
-    closeBtn.innerHTML = `
-      <span class="qs-btn-darkmode-icon" aria-hidden="true">
-        <img src="${chrome.runtime.getURL(
-          "assets/close-icon.svg"
-        )}" alt="Close" class="qs-btn-darkmode-svg" />
-      </span>
-    `;
+
+    const closeBtnIcon = document.createElement("span");
+    closeBtnIcon.className = "qs-btn-darkmode-icon";
+    closeBtnIcon.setAttribute("aria-hidden", "true");
+
+    const closeBtnImg = document.createElement("img");
+    closeBtnImg.src = chrome.runtime.getURL("assets/close-icon.svg");
+    closeBtnImg.alt = "Close";
+    closeBtnImg.className = "qs-btn-darkmode-svg";
+
+    closeBtnIcon.appendChild(closeBtnImg);
+    closeBtn.appendChild(closeBtnIcon);
     closeBtn.addEventListener("click", () => this.closeReader());
 
     navControls.appendChild(summaryBtn);

@@ -102,7 +102,7 @@
   padding: 20px 24px;
   margin-bottom: 2em;
   box-shadow: none;
-  font-size: 16px !important;
+  font-size: 16px;
 
   /* Animation */
   overflow: hidden;
@@ -416,7 +416,7 @@
 }
 
 .quickscribe-article-source {
-  font-size: 14px !important;
+  font-size: 14px;
   color: #666d80;
   margin-bottom: 0.2em;
   font-weight: 400;
@@ -425,11 +425,11 @@
 
 .quickscribe-subtitle {
   color: #36394a;
-  font-size: 20px !important;
+  font-size: 20px;
   font-style: normal;
   font-weight: 400;
-  line-height: 30px !important;
-  margin-bottom: 28px !important;
+  line-height: 30px;
+  margin-bottom: 28px;
 }
 
 /* --- Font enforcement for all overlay elements --- */
@@ -444,31 +444,31 @@
 .quickscribe-article-source,
 .quickscribe-subtitle {
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, sans-serif !important;
-  font-style: normal !important;
-  font-weight: 400 !important;
-  font-size: inherit !important;
-  color: inherit !important;
+    Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: inherit;
+  color: inherit;
 }
 
 /* Special font rule for article title without color inheritance */
 .quickscribe-article-title {
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, sans-serif !important;
-  font-style: normal !important;
-  font-weight: 700 !important;
-  font-size: 36px !important;
-  line-height: 42px !important;
-  margin-bottom: 16px !important;
+    Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 42px;
+  margin-bottom: 16px;
 }
 
 .qs-btn-label {
-  font-size: 14px !important;
-  font-weight: 500 !important;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .quickscribe-error {
-  font-size: 15px !important;
+  font-size: 15px;
 }
 
 @keyframes qs-fade-in {
@@ -560,7 +560,7 @@
 [data-theme="dark"] .quickscribe-summary {
   background: #1e293b;
   border: 1px solid #334155;
-  color: #cbd5e1 !important;
+  color: #cbd5e1;
   transition: background 0.3s, border 0.3s, color 0.3s, opacity 0.4s,
     max-height 0.4s, padding 0.4s, margin 0.4s;
   opacity: 1;
@@ -594,7 +594,7 @@
   background: #1d1d20;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   transition: background 0.3s, border 0.3s;
-  color: #e2e8f0 !important;
+  color: #e2e8f0;
 }
 [data-theme="dark"] .qs-navbar-logo {
   filter: brightness(0.9) grayscale(0.2);
@@ -611,7 +611,7 @@
   color: #eeeff0;
 }
 [data-theme="dark"] .qs-navbar .qs-btn-label {
-  color: #eeeff0 !important;
+  color: #eeeff0;
 }
 [data-theme="dark"] .qs-navbar .qs-btn img {
   filter: brightness(0) invert(1);
@@ -635,7 +635,7 @@
   color: #d1d5dc !important;
 }
 [data-theme="dark"] .quickscribe-article-source {
-  color: #99a1af !important;
+  color: #99a1af;
 }
 [data-theme="dark"] .quickscribe-article {
   color: #d1d5dc !important;

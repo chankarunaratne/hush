@@ -173,6 +173,7 @@
   padding: 20px 24px;
   margin-bottom: 2em;
   box-shadow: none;
+  font-size: 16px !important;
 
   /* Animation */
   overflow: hidden;
@@ -511,7 +512,7 @@
 }
 
 .quickscribe-article-source {
-  font-size: 14px;
+  font-size: 14px !important;
   color: #666d80;
   margin-bottom: 0.2em;
   font-weight: 400;
@@ -520,11 +521,11 @@
 
 .quickscribe-subtitle {
   color: #36394a;
-  font-size: 20px;
+  font-size: 20px !important;
   font-style: normal;
   font-weight: 400;
-  line-height: 30px;
-  margin-bottom: 28px;
+  line-height: 30px !important;
+  margin-bottom: 28px !important;
 }
 
 /* --- Font enforcement for all overlay elements --- */
@@ -558,23 +559,9 @@
   margin-bottom: 16px !important;
 }
 
-.quickscribe-article-source {
-  font-size: 14px !important;
-}
-
-.quickscribe-subtitle {
-  font-size: 20px !important;
-  line-height: 30px !important;
-  margin-bottom: 28px !important;
-}
-
 .qs-btn-label {
   font-size: 14px !important;
   font-weight: 500 !important;
-}
-
-.quickscribe-summary {
-  font-size: 16px !important;
 }
 
 .quickscribe-error {
@@ -670,8 +657,12 @@
 [data-theme="dark"] .quickscribe-summary {
   background: #1e293b;
   border: 1px solid #334155;
-  color: #cbd5e1;
-  transition: background 0.3s, border 0.3s, color 0.3s;
+  color: #cbd5e1 !important;
+  transition: background 0.3s, border 0.3s, color 0.3s, opacity 0.4s,
+    max-height 0.4s, padding 0.4s, margin 0.4s;
+  opacity: 1;
+  overflow: hidden;
+  max-height: 1000px;
 }
 [data-theme="dark"] .quickscribe-summary-label-row {
   color: #e2e8f0;
@@ -752,22 +743,8 @@
 [data-theme="dark"] .quickscribe-article {
   color: #d1d5dc !important;
 }
-[data-theme="dark"] .quickscribe-summary {
-  color: #cbd5e1 !important;
-}
 [data-theme="dark"] .quickscribe-reader-content .quickscribe-reader-title {
   color: #f8fafc !important;
-}
-
-[data-theme="dark"] .quickscribe-summary {
-  background: #1e293b;
-  border: 1px solid #334155;
-  color: #cbd5e1 !important;
-  transition: background 0.3s, border 0.3s, color 0.3s, opacity 0.4s,
-    max-height 0.4s, padding 0.4s, margin 0.4s;
-  opacity: 1;
-  overflow: hidden;
-  max-height: 1000px;
 }
 [data-theme="dark"] .quickscribe-summary.summary-hidden {
   opacity: 0;

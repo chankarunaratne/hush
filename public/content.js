@@ -139,22 +139,22 @@ class QuickScribeReader {
 
     // Summarize with AI button
     const summaryBtn = document.createElement("button");
-    summaryBtn.className = "qs-btn qs-btn-primary";
+    summaryBtn.className = "qs-btn qs-btn--primary";
     summaryBtn.type = "button";
 
     const summaryBtnIcon = document.createElement("span");
-    summaryBtnIcon.className = "qs-btn-icon";
+    summaryBtnIcon.className = "qs-btn__icon";
     summaryBtnIcon.setAttribute("aria-hidden", "true");
 
     const summaryBtnImg = document.createElement("img");
     summaryBtnImg.src = chrome.runtime.getURL("assets/summary-icon.svg");
     summaryBtnImg.alt = "Summarize";
-    summaryBtnImg.className = "qs-btn-svg";
+    summaryBtnImg.className = "qs-btn__svg";
 
     summaryBtnIcon.appendChild(summaryBtnImg);
 
     const summaryBtnLabel = document.createElement("span");
-    summaryBtnLabel.className = "qs-btn-label";
+    summaryBtnLabel.className = "qs-btn__label";
     summaryBtnLabel.textContent = "Summarize with AI";
 
     summaryBtn.appendChild(summaryBtnIcon);
@@ -163,19 +163,19 @@ class QuickScribeReader {
 
     // --- Dark mode toggle button (UI only) ---
     const darkModeBtn = document.createElement("button");
-    darkModeBtn.className = "qs-btn qs-btn-darkmode";
+    darkModeBtn.className = "qs-btn qs-btn--icon qs-btn--darkmode";
     darkModeBtn.type = "button";
     darkModeBtn.setAttribute("aria-label", "Toggle dark mode");
     darkModeBtn.setAttribute("role", "button");
 
     const darkModeBtnIcon = document.createElement("span");
-    darkModeBtnIcon.className = "qs-btn-darkmode-icon";
+    darkModeBtnIcon.className = "qs-btn__icon";
     darkModeBtnIcon.setAttribute("aria-hidden", "true");
 
     const darkModeBtnImg = document.createElement("img");
     darkModeBtnImg.src = chrome.runtime.getURL("assets/light.svg");
     darkModeBtnImg.alt = "Toggle dark mode";
-    darkModeBtnImg.className = "qs-btn-darkmode-svg";
+    darkModeBtnImg.className = "qs-btn__svg";
 
     darkModeBtnIcon.appendChild(darkModeBtnImg);
     darkModeBtn.appendChild(darkModeBtnIcon);
@@ -184,19 +184,19 @@ class QuickScribeReader {
 
     // Close reader button
     const closeBtn = document.createElement("button");
-    closeBtn.className = "qs-btn qs-btn-darkmode qs-btn-closeicon";
+    closeBtn.className = "qs-btn qs-btn--icon";
     closeBtn.type = "button";
     closeBtn.setAttribute("aria-label", "Close reader");
     closeBtn.setAttribute("role", "button");
 
     const closeBtnIcon = document.createElement("span");
-    closeBtnIcon.className = "qs-btn-darkmode-icon";
+    closeBtnIcon.className = "qs-btn__icon";
     closeBtnIcon.setAttribute("aria-hidden", "true");
 
     const closeBtnImg = document.createElement("img");
     closeBtnImg.src = chrome.runtime.getURL("assets/close-icon.svg");
     closeBtnImg.alt = "Close";
-    closeBtnImg.className = "qs-btn-darkmode-svg";
+    closeBtnImg.className = "qs-btn__svg";
 
     closeBtnIcon.appendChild(closeBtnImg);
     closeBtn.appendChild(closeBtnIcon);
@@ -355,9 +355,9 @@ class QuickScribeReader {
       return;
     }
 
-    const summaryBtn = this.overlay.querySelector(".qs-btn-primary");
-    const iconSpan = summaryBtn.querySelector(".qs-btn-icon");
-    const labelSpan = summaryBtn.querySelector(".qs-btn-label");
+    const summaryBtn = this.overlay.querySelector(".qs-btn--primary");
+    const iconSpan = summaryBtn.querySelector(".qs-btn__icon");
+    const labelSpan = summaryBtn.querySelector(".qs-btn__label");
     const originalLabel = "Summarize with AI";
 
     // Show loading state
@@ -429,12 +429,12 @@ class QuickScribeReader {
   }
 
   updateSummaryButton(isVisible) {
-    const summaryBtn = this.overlay.querySelector(".qs-btn-primary");
+    const summaryBtn = this.overlay.querySelector(".qs-btn--primary");
     if (!summaryBtn) return;
 
-    const iconSpan = summaryBtn.querySelector(".qs-btn-icon");
-    const labelSpan = summaryBtn.querySelector(".qs-btn-label");
-    const iconImg = iconSpan ? iconSpan.querySelector(".qs-btn-svg") : null;
+    const iconSpan = summaryBtn.querySelector(".qs-btn__icon");
+    const labelSpan = summaryBtn.querySelector(".qs-btn__label");
+    const iconImg = iconSpan ? iconSpan.querySelector(".qs-btn__svg") : null;
 
     if (isVisible) {
       labelSpan.textContent = "Hide AI Summary";
@@ -593,7 +593,7 @@ class QuickScribeReader {
 
   setDarkMode(enabled) {
     const overlay = this.overlay;
-    const darkModeBtn = overlay.querySelector(".qs-btn-darkmode");
+    const darkModeBtn = overlay.querySelector(".qs-btn--darkmode");
     const iconImg = darkModeBtn ? darkModeBtn.querySelector("img") : null;
     if (enabled) {
       overlay.setAttribute("data-theme", "dark");

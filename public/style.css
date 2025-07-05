@@ -269,6 +269,7 @@
   align-items: center;
 }
 
+/* --- UNIFIED BUTTON SYSTEM --- */
 .qs-btn {
   display: flex;
   flex-direction: row;
@@ -291,7 +292,17 @@
   box-sizing: border-box;
 }
 
-.qs-btn-primary {
+/* Base button focus states */
+.qs-btn:focus {
+  outline: none;
+}
+.qs-btn:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Primary button modifier (summary toggle) */
+.qs-btn--primary {
   background: #fff;
   color: #36394a;
   width: 180px;
@@ -302,28 +313,21 @@
   padding-left: 10px;
   padding-right: 10px;
 }
-.qs-btn-primary:hover,
-.qs-btn-primary:focus-visible {
+.qs-btn--primary:hover,
+.qs-btn--primary:focus-visible {
   background: #f6f8fa;
 }
-.qs-btn-primary .qs-btn-icon {
-  min-width: 20px;
-  min-height: 20px;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: opacity 0.2s;
-}
-.qs-btn-primary .qs-btn-label {
-  text-align: center;
-  flex: none;
-  margin: 0;
-  line-height: 20px;
+.qs-btn--primary.generating,
+.qs-btn--primary:disabled {
+  background: #f3f4f6;
+  color: #9ca3af;
+  cursor: not-allowed;
+  border: none;
+  box-shadow: none;
 }
 
-.qs-btn-secondary {
+/* Secondary button modifier (unused currently) */
+.qs-btn--secondary {
   background: #f6f8fa;
   color: #36394a;
   box-shadow: none;
@@ -332,11 +336,37 @@
   padding-left: 10px;
   padding-right: 10px;
 }
-.qs-btn-secondary:hover,
-.qs-btn-secondary:focus-visible {
+.qs-btn--secondary:hover,
+.qs-btn--secondary:focus-visible {
   background: #e5e7eb;
 }
-.qs-btn-secondary .qs-btn-icon {
+
+/* Icon button modifier (dark mode toggle, close button) */
+.qs-btn--icon {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  max-width: 32px;
+  max-height: 32px;
+  border-radius: 8px;
+  padding: 6px;
+  background: #f6f8fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none;
+  border: none;
+  transition: background 0.2s;
+}
+.qs-btn--icon:hover,
+.qs-btn--icon:focus-visible {
+  background: #d1d5db;
+  cursor: pointer;
+}
+
+/* Button child elements */
+.qs-btn__icon {
   min-width: 20px;
   min-height: 20px;
   width: 20px;
@@ -346,26 +376,35 @@
   justify-content: center;
   transition: opacity 0.2s;
 }
-.qs-btn-secondary .qs-btn-label {
+
+.qs-btn--icon .qs-btn__icon {
+  width: 16px;
+  height: 16px;
+}
+
+.qs-btn__label {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  font-style: normal;
   text-align: center;
   flex: none;
   margin: 0;
   line-height: 20px;
 }
 
-.qs-btn:focus {
-  outline: none;
-}
-.qs-btn:focus-visible {
-  outline: 2px solid #3b82f6;
-  outline-offset: 2px;
-}
-
-.qs-btn-svg {
+.qs-btn__svg {
   width: 20px;
   height: 20px;
   display: inline-block;
   vertical-align: middle;
+}
+
+.qs-btn--icon .qs-btn__svg {
+  width: 14px;
+  height: 14px;
+  display: block;
 }
 
 /* Responsive for smaller screens */
@@ -391,29 +430,20 @@
     width: 60px;
     height: 20px;
   }
-  .qs-btn-primary {
+  .qs-btn--primary {
     width: 170px;
     min-width: 170px;
     max-width: 170px;
     padding-left: 12px;
     padding-right: 12px;
   }
-  .qs-btn-secondary {
+  .qs-btn--secondary {
     padding-left: 12px;
     padding-right: 12px;
   }
 }
 
 /* --- END QS NAVBAR --- */
-
-.qs-btn-primary.generating,
-.qs-btn-primary:disabled {
-  background: #f3f4f6;
-  color: #9ca3af;
-  cursor: not-allowed;
-  border: none;
-  box-shadow: none;
-}
 
 .quickscribe-article-source {
   font-size: 14px;
@@ -440,7 +470,6 @@
 .quickscribe-error,
 .qs-navbar,
 .qs-btn,
-.qs-btn-label,
 .quickscribe-article-source,
 .quickscribe-subtitle {
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
@@ -460,11 +489,6 @@
   font-size: 36px;
   line-height: 42px;
   margin-bottom: 16px;
-}
-
-.qs-btn-label {
-  font-size: 14px;
-  font-weight: 500;
 }
 
 .quickscribe-error {
@@ -489,41 +513,6 @@
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-.qs-btn-darkmode {
-  width: 32px;
-  height: 32px;
-  min-width: 32px;
-  min-height: 32px;
-  max-width: 32px;
-  max-height: 32px;
-  border-radius: 8px;
-  padding: 6px;
-  background: #f6f8fa;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: none;
-  border: none;
-  transition: background 0.2s;
-}
-.qs-btn-darkmode:hover,
-.qs-btn-darkmode:focus-visible {
-  background: #d1d5db;
-  cursor: pointer;
-}
-.qs-btn-darkmode-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 16px;
-  height: 16px;
-}
-.qs-btn-darkmode-svg {
-  width: 14px;
-  height: 14px;
-  display: block;
 }
 
 /* === DARK MODE (scoped to overlay) === */
@@ -610,7 +599,7 @@
   background: #4a5566;
   color: #eeeff0;
 }
-[data-theme="dark"] .qs-navbar .qs-btn-label {
+[data-theme="dark"] .qs-navbar .qs-btn__label {
   color: #eeeff0;
 }
 [data-theme="dark"] .qs-navbar .qs-btn img {

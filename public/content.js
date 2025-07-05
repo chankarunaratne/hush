@@ -578,9 +578,19 @@ class QuickScribeReader {
     const saved = localStorage.getItem("qs_reader_theme");
     const overlay = this.overlay;
     let dark = false;
-    if (saved === "dark") dark = true;
-    else if (saved === "light") dark = false;
-    else dark = false; // Default to light mode on first visit
+
+    if (saved === "dark") {
+      dark = true;
+    } else if (saved === "light") {
+      dark = false;
+    } else {
+      // No saved preference - check system preference
+      const systemPrefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)"
+      ).matches;
+      dark = systemPrefersDark;
+    }
+
     this.setDarkMode(dark);
   }
 

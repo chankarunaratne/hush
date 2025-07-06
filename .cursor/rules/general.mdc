@@ -1,0 +1,53 @@
+---
+alwaysApply: false
+description:
+globs:
+---
+
+# General Rules
+
+# Hush Chrome Extension – Development Rules & Constraints
+
+These are the guiding principles for working on the `Hush` Chrome extension project. Follow them strictly when creating, editing, or refactoring any part of the codebase, especially when working with Cursor or automation tools.
+
+---
+
+## General Principles
+
+- **Do not break existing functionality**  
+  New features or code changes must never break current extension behavior (including buttons, theme toggles, overlays, etc.).
+
+- **Desktop-first**  
+  This is a desktop-only Chrome extension. You do NOT need to follow mobile-first practices. Prioritize larger viewports and desktop UX.
+
+- **Scalable code**  
+  Any new component or UI element must be written with future extensibility in mind (e.g., easy theming, flexible layout, maintainable CSS).
+
+- **Preserve dark mode**  
+  Every update (style, component, layout, animation) must account for dark mode. Do not implement anything that breaks it.
+
+- **Don’t break the AI summary**  
+  The AI summary functionality is tied to backend API calls. Don’t touch summary logic, its layout, or interactions unless specifically requested.
+
+- **No hallucinations**  
+  Never invent components, icons, sections, or layouts. Always stick exactly to the user-provided instructions.
+
+- **Strict CSS isolation**  
+  New styles must not leak or override existing styles outside their intended components.
+
+- **Consistent design**  
+  Don’t introduce inconsistent UI elements or spacing. Follow existing visual language unless explicitly requested otherwise.
+
+---
+
+## When Creating or Updating Components
+
+- Ensure:
+  - Design consistency (spacing, font, border radius)
+  - Dark mode compatibility
+  - No visual regressions elsewhere
+  - Clean class naming with BEM-style (`qs-btn--primary`, `qs-summary__label`)
+  - Logical structure for future refactors or scaling
+  - That the extension UI loads smoothly with animations/transitions still functional
+
+---

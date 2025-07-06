@@ -1,7 +1,5 @@
 ---
-alwaysApply: false
-description:
-globs:
+alwaysApply: true
 ---
 
 # General Rules

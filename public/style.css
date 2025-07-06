@@ -95,6 +95,10 @@
   margin-bottom: 0.5em;
 }
 
+.quickscribe-article a {
+  color: #4860c8 !important;
+}
+
 .quickscribe-summary {
   background: #f6f8fa;
   border: 1px solid #eceff3;

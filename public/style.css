@@ -126,24 +126,27 @@
 }
 
 .quickscribe-summary-label-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 18px;
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin-bottom: 18px !important;
+  flex-direction: row !important;
 }
 
 .quickscribe-summary-icon {
-  width: 20px;
-  height: 20px;
-  display: inline-block;
+  width: 20px !important;
+  height: 20px !important;
+  display: inline-block !important;
+  flex-shrink: 0 !important;
 }
 
 .quickscribe-summary-label-text {
-  font-size: 15px;
-  font-weight: 600;
-  color: #36394a;
-  letter-spacing: 0.01em;
-  line-height: 1.2;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  color: #36394a !important;
+  letter-spacing: 0.01em !important;
+  line-height: 1.2 !important;
+  flex: 1 !important;
 }
 
 .quickscribe-summary-bullets {
@@ -257,20 +260,29 @@
   top: 0 !important;
   z-index: 10 !important;
   animation: qs-fade-in 300ms ease-out;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  flex-wrap: nowrap !important;
+  text-align: left !important;
 }
 
 .qs-navbar-logo {
-  height: 24px;
-  width: 74px;
-  object-fit: contain;
-  display: block;
+  height: 24px !important;
+  width: 74px !important;
+  object-fit: contain !important;
+  display: block !important;
+  flex-shrink: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  align-self: center !important;
 }
 
 .qs-navbar-controls {
-  display: flex;
-  flex-direction: row;
-  gap: 8px;
-  align-items: center;
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 8px !important;
+  align-items: center !important;
+  flex-shrink: 0 !important;
 }
 
 /* --- UNIFIED BUTTON SYSTEM --- */

@@ -532,6 +532,9 @@
 [data-theme="dark"] .quickscribe-article {
   color: #d1d5dc !important;
 }
+[data-theme="dark"] .quickscribe-article a {
+  color: #68e395 !important;
+}
 [data-theme="dark"] .quickscribe-article h1,
 [data-theme="dark"] .quickscribe-article h2,
 [data-theme="dark"] .quickscribe-article h3,

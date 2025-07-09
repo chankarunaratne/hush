@@ -605,12 +605,16 @@ class QuickScribeReader {
     const overlay = this.overlay;
     const darkModeBtn = overlay.querySelector(".qs-btn--darkmode");
     const iconImg = darkModeBtn ? darkModeBtn.querySelector("img") : null;
+    const logo = overlay.querySelector(".qs-navbar-logo");
+
     if (enabled) {
       overlay.setAttribute("data-theme", "dark");
       if (iconImg) iconImg.src = chrome.runtime.getURL("assets/light.svg"); // Show light icon in dark mode
+      if (logo) logo.src = chrome.runtime.getURL("assets/logodark.png"); // Show dark logo in dark mode
     } else {
       overlay.removeAttribute("data-theme");
       if (iconImg) iconImg.src = chrome.runtime.getURL("assets/dark.svg"); // Show dark icon in light mode
+      if (logo) logo.src = chrome.runtime.getURL("assets/logo.png"); // Show regular logo in light mode
     }
   }
 }

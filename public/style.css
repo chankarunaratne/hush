@@ -548,6 +548,24 @@
 [data-theme="dark"] .quickscribe-article {
   color: #d1d5dc !important;
 }
+[data-theme="dark"] .quickscribe-article p {
+  color: #d1d5dc !important;
+}
+[data-theme="dark"] .quickscribe-article div {
+  color: #d1d5dc !important;
+}
+[data-theme="dark"] .quickscribe-article span {
+  color: #d1d5dc !important;
+}
+[data-theme="dark"] .quickscribe-article li {
+  color: #d1d5dc !important;
+}
+[data-theme="dark"] .quickscribe-article td {
+  color: #d1d5dc !important;
+}
+[data-theme="dark"] .quickscribe-article th {
+  color: #d1d5dc !important;
+}
 [data-theme="dark"] .quickscribe-article a {
   color: #68e395 !important;
 }
@@ -645,9 +663,6 @@
 }
 [data-theme="dark"] .quickscribe-article-source {
   color: #99a1af !important;
-}
-[data-theme="dark"] .quickscribe-article {
-  color: #d1d5dc !important;
 }
 
 [data-theme="dark"] .quickscribe-summary.summary-hidden {

@@ -66,7 +66,7 @@ class QuickScribeReader {
           content = {
             title: article.title || document.title,
             text: article.textContent,
-            html: article.content,
+            html: this.cleanArticleContent(article.content),
             excerpt: article.excerpt,
             byline: article.byline,
           };
@@ -80,24 +80,55 @@ class QuickScribeReader {
     if (!content) {
       const articleElement = document.querySelector("article");
       if (articleElement && articleElement.textContent.trim().length > 100) {
+        const cleanedHtml = this.cleanArticleContent(articleElement.innerHTML);
         content = {
           title: document.title,
           text: articleElement.textContent,
-          html: articleElement.innerHTML,
+          html: cleanedHtml,
           excerpt: "",
           byline: "",
         };
       }
     }
 
-    // Last resort: use body text
+    // Enhanced fallback: try to find main content areas
     if (!content) {
-      const bodyText = document.body.textContent;
-      if (bodyText && bodyText.trim().length > 100) {
+      const contentSelectors = [
+        'main[role="main"]',
+        'div[role="main"]',
+        ".main-content",
+        ".article-content",
+        ".post-content",
+        ".entry-content",
+        ".content",
+        "main",
+      ];
+
+      for (const selector of contentSelectors) {
+        const element = document.querySelector(selector);
+        if (element && element.textContent.trim().length > 100) {
+          const cleanedHtml = this.cleanArticleContent(element.innerHTML);
+          content = {
+            title: document.title,
+            text: element.textContent,
+            html: cleanedHtml,
+            excerpt: "",
+            byline: "",
+          };
+          break;
+        }
+      }
+    }
+
+    // Last resort: use body text but heavily filter it
+    if (!content) {
+      const bodyClone = document.body.cloneNode(true);
+      const cleanedHtml = this.cleanArticleContent(bodyClone.innerHTML);
+      if (cleanedHtml && cleanedHtml.trim().length > 100) {
         content = {
           title: document.title,
-          text: bodyText,
-          html: null,
+          text: bodyClone.textContent,
+          html: cleanedHtml,
           excerpt: "",
           byline: "",
         };
@@ -110,6 +141,146 @@ class QuickScribeReader {
     }
 
     return content;
+  }
+
+  cleanArticleContent(htmlString) {
+    if (!htmlString) return htmlString;
+
+    // Create a temporary div to manipulate the HTML
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = htmlString;
+
+    // Remove navigation elements
+    const navSelectors = [
+      "nav",
+      "header",
+      "footer",
+      "aside",
+      ".nav",
+      ".navbar",
+      ".navigation",
+      ".menu",
+      ".header",
+      ".footer",
+      ".sidebar",
+      ".aside",
+      ".breadcrumb",
+      ".breadcrumbs",
+      ".social-share",
+      ".share-buttons",
+      ".author-bio",
+      ".related-posts",
+      ".comments",
+      ".advertisement",
+      ".ads",
+      ".ad",
+      '[role="navigation"]',
+      '[role="banner"]',
+      '[role="contentinfo"]',
+    ];
+
+    navSelectors.forEach((selector) => {
+      const elements = tempDiv.querySelectorAll(selector);
+      elements.forEach((el) => el.remove());
+    });
+
+    // Remove logo images and icons (but keep article images)
+    const logoSelectors = [
+      'img[alt*="logo" i]',
+      'img[src*="logo" i]',
+      'img[class*="logo" i]',
+      'img[id*="logo" i]',
+      ".logo img",
+      ".brand img",
+      ".site-logo img",
+    ];
+
+    logoSelectors.forEach((selector) => {
+      const elements = tempDiv.querySelectorAll(selector);
+      elements.forEach((el) => {
+        // Additional check: remove if image is small (likely a logo/icon)
+        if (el.width && el.height && (el.width < 150 || el.height < 150)) {
+          el.remove();
+        } else if (
+          el.naturalWidth &&
+          el.naturalHeight &&
+          (el.naturalWidth < 150 || el.naturalHeight < 150)
+        ) {
+          el.remove();
+        } else {
+          el.remove(); // Remove all logo-related images
+        }
+      });
+    });
+
+    // Remove small images that are likely icons/logos
+    const allImages = tempDiv.querySelectorAll("img");
+    allImages.forEach((img) => {
+      // Check if image has dimensions and is very small
+      if (
+        (img.width && img.height && img.width < 50 && img.height < 50) ||
+        (img.naturalWidth &&
+          img.naturalHeight &&
+          img.naturalWidth < 50 &&
+          img.naturalHeight < 50)
+      ) {
+        img.remove();
+      }
+
+      // Remove images with icon-related classes or attributes
+      const iconPatterns = ["icon", "sprite", "bullet", "arrow", "social"];
+      const imgClasses = (img.className || "").toLowerCase();
+      const imgSrc = (img.src || "").toLowerCase();
+      const imgAlt = (img.alt || "").toLowerCase();
+
+      if (
+        iconPatterns.some(
+          (pattern) =>
+            imgClasses.includes(pattern) ||
+            imgSrc.includes(pattern) ||
+            imgAlt.includes(pattern)
+        )
+      ) {
+        img.remove();
+      }
+    });
+
+    // Remove navigation links
+    const linkSelectors = [
+      'a[href="#"]',
+      'a[href^="#"]',
+      'a[href="/"]',
+      'a[href^="/category"]',
+      'a[href^="/tag"]',
+      ".nav-link",
+      ".menu-item a",
+    ];
+
+    linkSelectors.forEach((selector) => {
+      const elements = tempDiv.querySelectorAll(selector);
+      elements.forEach((el) => el.remove());
+    });
+
+    // Remove elements with common navigation class names
+    const navClassSelectors = [
+      ".skip-link",
+      ".screen-reader-text",
+      ".sr-only",
+      ".visually-hidden",
+    ];
+
+    navClassSelectors.forEach((selector) => {
+      const elements = tempDiv.querySelectorAll(selector);
+      elements.forEach((el) => el.remove());
+    });
+
+    // Remove empty elements
+    const emptyElements = tempDiv.querySelectorAll(
+      "p:empty, div:empty, span:empty"
+    );
+    emptyElements.forEach((el) => el.remove());
+
+    return tempDiv.innerHTML;
   }
 
   createOverlay(content) {

@@ -267,8 +267,8 @@
 }
 
 .qs-navbar-logo {
-  height: 24px !important;
-  width: 74px !important;
+  height: 28px !important;
+  width: 86px !important;
   object-fit: contain !important;
   display: block !important;
   flex-shrink: 0 !important;
@@ -444,8 +444,8 @@
     max-width: 100%;
   }
   .qs-navbar-logo {
-    width: 60px;
-    height: 20px;
+    width: 70px;
+    height: 23px;
   }
   .qs-btn--primary {
     width: 170px;
@@ -609,14 +609,14 @@
   filter: brightness(0.9) grayscale(0.2) !important;
 }
 [data-theme="dark"] .qs-navbar .qs-btn {
-  background: #364153 !important;
+  background: #262c36 !important;
   color: #eeeff0 !important;
-  border: none !important;
+  border: 1px solid #3d444d !important;
   box-shadow: none !important;
 }
 [data-theme="dark"] .qs-navbar .qs-btn:hover,
 [data-theme="dark"] .qs-navbar .qs-btn:focus-visible {
-  background: #4a5566 !important;
+  background: #2f3640 !important;
   color: #eeeff0 !important;
 }
 [data-theme="dark"] .qs-navbar .qs-btn__label {

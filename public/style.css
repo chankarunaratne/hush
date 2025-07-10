@@ -340,11 +340,10 @@
   align-items: center !important;
   justify-content: space-between !important;
   background: #fff !important;
-  box-shadow: 0px 1px 4px 0px rgba(12, 12, 13, 0.05) !important;
   padding: 0 16px !important;
   height: 64px !important;
   min-height: 64px !important;
-  border-bottom: 1px solid #e5e7eb !important;
+  border-bottom: 1px solid #eceff3 !important;
   position: sticky !important;
   top: 0 !important;
   z-index: 10 !important;
@@ -766,15 +765,15 @@
   color: #f8fafc !important;
 }
 [data-theme="dark"] .quickscribe-article h1 {
-  border-bottom: 2px solid #334155 !important;
+  border-bottom: 2px solid #363739 !important;
 }
 [data-theme="dark"] .quickscribe-article blockquote {
-  border-left: 4px solid #334155 !important;
+  border-left: 4px solid #363739 !important;
   color: #94a3b8 !important;
 }
 [data-theme="dark"] .quickscribe-summary {
-  background: #1e293b !important;
-  border: 1px solid #334155 !important;
+  background: #2a2b2d !important;
+  border: 1px solid #363739 !important;
   color: #cbd5e1 !important;
   transition: background 0.3s, border 0.3s, color 0.3s, opacity 0.4s,
     max-height 0.4s, padding 0.4s, margin 0.4s;
@@ -822,7 +821,7 @@
   line-height: 28px !important;
 }
 [data-theme="dark"] .quickscribe-loading::after {
-  border: 2px solid #334155 !important;
+  border: 2px solid #363739 !important;
   border-top: 2px solid #3b82f6 !important;
 }
 [data-theme="dark"] .quickscribe-error {
@@ -861,13 +860,13 @@
 
 /* Other Dark Mode Styles */
 [data-theme="dark"] .quickscribe-reader-content::-webkit-scrollbar-thumb {
-  background: #475569 !important;
+  background: #4a4b4d !important;
 }
 [data-theme="dark"] .quickscribe-reader-content::-webkit-scrollbar-track {
-  background: #1e293b !important;
+  background: #2a2b2d !important;
 }
 [data-theme="dark"] .quickscribe-reader-content::-webkit-scrollbar {
-  background: #1e293b !important;
+  background: #2a2b2d !important;
 }
 
 [data-theme="dark"] .quickscribe-article-title {

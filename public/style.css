@@ -787,6 +787,9 @@
 [data-theme="dark"] .quickscribe-summary-label-text {
   color: #e2e8f0 !important;
 }
+[data-theme="dark"] .quickscribe-summary-icon {
+  filter: brightness(0) invert(1) opacity(0.9) !important;
+}
 [data-theme="dark"] .quickscribe-summary-bullet {
   color: #cbd5e1 !important;
 }

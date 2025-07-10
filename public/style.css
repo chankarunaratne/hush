@@ -23,11 +23,10 @@
   background: #ffffff !important;
   padding: 32px !important;
   max-width: 750px !important;
-  margin: 0 auto !important;
+  margin: 32px auto !important;
   width: 100% !important;
   box-sizing: border-box !important;
   animation: qs-content-in 400ms ease-out 150ms both;
-  margin-top: 32px !important;
   box-shadow: 0px 1px 4px 0px rgba(12, 12, 13, 0.05) !important;
   border-radius: 16px !important;
 }

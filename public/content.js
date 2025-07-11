@@ -3,6 +3,9 @@
 
 class QuickScribeReader {
   constructor() {
+    // Feature flags
+    this.AI_SUMMARY_ENABLED = false; // Set to true to re-enable AI Summary feature
+
     this.overlay = null;
     this.cachedContent = null;
     this.cachedSummary = null;
@@ -308,29 +311,34 @@ class QuickScribeReader {
     const navControls = document.createElement("div");
     navControls.className = "qs-navbar-controls";
 
-    // Summarize with AI button
-    const summaryBtn = document.createElement("button");
-    summaryBtn.className = "qs-btn qs-btn--primary";
-    summaryBtn.type = "button";
+    // Conditionally create Summarize with AI button
+    if (this.AI_SUMMARY_ENABLED) {
+      // Summarize with AI button
+      const summaryBtn = document.createElement("button");
+      summaryBtn.className = "qs-btn qs-btn--primary";
+      summaryBtn.type = "button";
 
-    const summaryBtnIcon = document.createElement("span");
-    summaryBtnIcon.className = "qs-btn__icon";
-    summaryBtnIcon.setAttribute("aria-hidden", "true");
+      const summaryBtnIcon = document.createElement("span");
+      summaryBtnIcon.className = "qs-btn__icon";
+      summaryBtnIcon.setAttribute("aria-hidden", "true");
 
-    const summaryBtnImg = document.createElement("img");
-    summaryBtnImg.src = chrome.runtime.getURL("assets/summary-icon.svg");
-    summaryBtnImg.alt = "Summarize";
-    summaryBtnImg.className = "qs-btn__svg";
+      const summaryBtnImg = document.createElement("img");
+      summaryBtnImg.src = chrome.runtime.getURL("assets/summary-icon.svg");
+      summaryBtnImg.alt = "Summarize";
+      summaryBtnImg.className = "qs-btn__svg";
 
-    summaryBtnIcon.appendChild(summaryBtnImg);
+      summaryBtnIcon.appendChild(summaryBtnImg);
 
-    const summaryBtnLabel = document.createElement("span");
-    summaryBtnLabel.className = "qs-btn__label";
-    summaryBtnLabel.textContent = "Summarize with AI";
+      const summaryBtnLabel = document.createElement("span");
+      summaryBtnLabel.className = "qs-btn__label";
+      summaryBtnLabel.textContent = "Summarize with AI";
 
-    summaryBtn.appendChild(summaryBtnIcon);
-    summaryBtn.appendChild(summaryBtnLabel);
-    summaryBtn.addEventListener("click", () => this.generateSummary());
+      summaryBtn.appendChild(summaryBtnIcon);
+      summaryBtn.appendChild(summaryBtnLabel);
+      summaryBtn.addEventListener("click", () => this.generateSummary());
+
+      navControls.appendChild(summaryBtn);
+    }
 
     // --- Dark mode toggle button (UI only) ---
     const darkModeBtn = document.createElement("button");
@@ -373,7 +381,6 @@ class QuickScribeReader {
     closeBtn.appendChild(closeBtnIcon);
     closeBtn.addEventListener("click", () => this.closeReader());
 
-    navControls.appendChild(summaryBtn);
     navControls.appendChild(darkModeBtn);
     navControls.appendChild(closeBtn);
 
@@ -509,6 +516,11 @@ class QuickScribeReader {
   }
 
   async generateSummary() {
+    // Early return if AI Summary feature is disabled
+    if (!this.AI_SUMMARY_ENABLED) {
+      return;
+    }
+
     // If summary is already cached, just toggle visibility with animation
     if (this.cachedSummary) {
       const summaryEl = this.overlay.querySelector(".quickscribe-summary");
@@ -600,6 +612,11 @@ class QuickScribeReader {
   }
 
   updateSummaryButton(isVisible) {
+    // Early return if AI Summary feature is disabled
+    if (!this.AI_SUMMARY_ENABLED) {
+      return;
+    }
+
     const summaryBtn = this.overlay.querySelector(".qs-btn--primary");
     if (!summaryBtn) return;
 
@@ -620,6 +637,11 @@ class QuickScribeReader {
   }
 
   displaySummary(summaryData) {
+    // Early return if AI Summary feature is disabled
+    if (!this.AI_SUMMARY_ENABLED) {
+      return;
+    }
+
     const contentArea = this.overlay.querySelector(
       ".quickscribe-reader-content"
     );

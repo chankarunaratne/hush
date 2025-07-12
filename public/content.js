@@ -151,7 +151,7 @@ class QuickScribeReader {
 
     // Create a temporary div to manipulate the HTML
     const tempDiv = document.createElement("div");
-    tempDiv.innerHTML = htmlString;
+    tempDiv.innerHTML = DOMPurify.sanitize(htmlString);
 
     // Remove navigation elements
     const navSelectors = [
@@ -490,10 +490,12 @@ class QuickScribeReader {
         "opacity 400ms ease-out, transform 400ms ease-out";
 
       if (content.html) {
-        articleWrapper.innerHTML = content.html;
+        articleWrapper.innerHTML = DOMPurify.sanitize(content.html);
         this.stripInlineStyles(articleWrapper);
       } else {
-        articleWrapper.innerHTML = this.formatContent(content.text);
+        articleWrapper.innerHTML = DOMPurify.sanitize(
+          this.formatContent(content.text)
+        );
       }
       contentArea.appendChild(articleWrapper);
 

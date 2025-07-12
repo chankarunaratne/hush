@@ -14,30 +14,30 @@ chrome.action.onClicked.addListener(async (tab) => {
       return;
     }
 
-    // Send message to content script to activate reader mode
-    const response = await chrome.tabs.sendMessage(tab.id, {
-      action: "activateReader",
-    });
-
-    if (response && response.success) {
-      console.log("Reader mode activated successfully");
-    }
-  } catch (error) {
-    console.error("Error activating reader mode:", error);
-
-    // If content script is not loaded, inject it manually
+    // Always inject scripts (activeTab-only model)
     try {
-      await chrome.scripting.executeScript({
+      // Inject CSS first
+      await chrome.scripting.insertCSS({
         target: { tabId: tab.id },
-        files: ["readability.js", "content.js"],
+        files: ["style.css"],
       });
 
-      // Try sending message again
+      // Inject JavaScript files in correct order
+      await chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        files: ["purify.min.js", "readability.js", "content.js"],
+      });
+
+      // Send message to content script to activate reader mode
       setTimeout(async () => {
         try {
-          await chrome.tabs.sendMessage(tab.id, {
+          const response = await chrome.tabs.sendMessage(tab.id, {
             action: "activateReader",
           });
+
+          if (response && response.success) {
+            console.log("Reader mode activated successfully");
+          }
         } catch (retryError) {
           console.error(
             "Failed to activate reader mode after script injection:",
@@ -48,6 +48,8 @@ chrome.action.onClicked.addListener(async (tab) => {
     } catch (injectionError) {
       console.error("Failed to inject content scripts:", injectionError);
     }
+  } catch (error) {
+    console.error("Error in extension activation:", error);
   }
 });
 

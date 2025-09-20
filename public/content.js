@@ -4,7 +4,7 @@
 class QuickScribeReader {
   constructor() {
     // Feature flags
-    this.AI_SUMMARY_ENABLED = true; // Set to true to re-enable AI Summary feature
+    this.AI_SUMMARY_ENABLED = false; // Set to true to re-enable AI Summary feature
 
     this.overlay = null;
     this.cachedContent = null;

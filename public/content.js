@@ -4,7 +4,7 @@
 class QuickScribeReader {
   constructor() {
     // Feature flags
-    this.AI_SUMMARY_ENABLED = false; // Set to true to re-enable AI Summary feature
+    this.AI_SUMMARY_ENABLED = true; // Set to true to re-enable AI Summary feature
 
     this.overlay = null;
     this.cachedContent = null;
@@ -13,6 +13,107 @@ class QuickScribeReader {
     this.apiUrl = "https://quickscribe-api.vercel.app/api/summarize";
 
     this.init();
+  }
+
+  // --- What's New helpers ---
+  async getExtensionVersion() {
+    try {
+      // MV3 content scripts can access chrome.runtime.getManifest
+      const manifest = chrome.runtime.getManifest();
+      return manifest && manifest.version ? manifest.version : "0";
+    } catch (e) {
+      return "0";
+    }
+  }
+
+  async hasSeenWhatsNew(version) {
+    try {
+      const key = `qs_whatsnew_seen_${version}`;
+      const data = await chrome.storage.local.get([key]);
+      return Boolean(data[key]);
+    } catch (e) {
+      // Fallback to localStorage if storage API not available
+      return localStorage.getItem(`qs_whatsnew_seen_${version}`) === "1";
+    }
+  }
+
+  async markWhatsNewSeen(version) {
+    const key = `qs_whatsnew_seen_${version}`;
+    try {
+      await chrome.storage.local.set({ [key]: true });
+    } catch (e) {
+      localStorage.setItem(key, "1");
+    }
+  }
+
+  async showWhatsNewIfNeeded() {
+    try {
+      const version = await this.getExtensionVersion();
+      const seen = await this.hasSeenWhatsNew(version);
+      if (seen) return;
+      this.renderWhatsNew(version);
+    } catch (e) {
+      // Silent fail
+    }
+  }
+
+  renderWhatsNew(version) {
+    if (!this.overlay) return;
+
+    // Backdrop
+    const backdrop = document.createElement("div");
+    backdrop.className = "qs-whatsnew-backdrop";
+    backdrop.setAttribute("role", "dialog");
+    backdrop.setAttribute("aria-modal", "true");
+
+    // Modal
+    const modal = document.createElement("div");
+    modal.className = "qs-whatsnew";
+
+    const header = document.createElement("div");
+    header.className = "qs-whatsnew__header";
+
+    const title = document.createElement("h3");
+    title.className = "qs-whatsnew__title";
+    title.textContent = "Help us make Hush better ✨";
+
+    const close = document.createElement("button");
+    close.className = "qs-whatsnew__close";
+    close.setAttribute("aria-label", "Close What's New");
+    close.addEventListener("click", async () => {
+      await this.markWhatsNewSeen(version);
+      backdrop.remove();
+    });
+
+    header.appendChild(title);
+    header.appendChild(close);
+
+    const body = document.createElement("div");
+    body.className = "qs-whatsnew__body";
+    body.textContent =
+      "We are building towards the next version of Hush and we want your help to improve it.\n\nClick the megaphone button (📢) to send us an email with your feedback. Tell us what you want next on Hush.\n\nThank you for helping us make Hush better for everyone! ❤️";
+
+    const footer = document.createElement("div");
+    footer.className = "qs-whatsnew__footer";
+
+    const gotIt = document.createElement("button");
+    gotIt.className = "qs-whatsnew__button qs-whatsnew__button--primary";
+    gotIt.type = "button";
+    gotIt.textContent = "Got it";
+    gotIt.addEventListener("click", async () => {
+      await this.markWhatsNewSeen(version);
+      backdrop.remove();
+    });
+
+    footer.appendChild(gotIt);
+
+    modal.appendChild(header);
+    modal.appendChild(body);
+    modal.appendChild(footer);
+    backdrop.appendChild(modal);
+
+    // Mount inside overlay so dark mode styles apply
+    this.overlay.appendChild(backdrop);
   }
 
   init() {
@@ -361,6 +462,32 @@ class QuickScribeReader {
     // Add dark mode toggle logic
     darkModeBtn.addEventListener("click", () => this.toggleDarkMode());
 
+    // --- Feedback button (icon-only) ---
+    const feedbackBtn = document.createElement("button");
+    feedbackBtn.className = "qs-btn qs-btn--icon";
+    feedbackBtn.type = "button";
+    feedbackBtn.setAttribute("aria-label", "Open feedback");
+    feedbackBtn.setAttribute("role", "button");
+
+    const feedbackBtnIcon = document.createElement("span");
+    feedbackBtnIcon.className = "qs-btn__icon";
+    feedbackBtnIcon.setAttribute("aria-hidden", "true");
+
+    const feedbackBtnImg = document.createElement("img");
+    feedbackBtnImg.src = chrome.runtime.getURL("assets/feedback.svg");
+    feedbackBtnImg.alt = "Feedback";
+    feedbackBtnImg.className = "qs-btn__svg";
+
+    feedbackBtnIcon.appendChild(feedbackBtnImg);
+    feedbackBtn.appendChild(feedbackBtnIcon);
+    feedbackBtn.addEventListener("click", () => {
+      const subject = encodeURIComponent("Hush feedback");
+      window.open(
+        `mailto:chankarunaratne@gmail.com?subject=${subject}`,
+        "_blank"
+      );
+    });
+
     // Close reader button
     const closeBtn = document.createElement("button");
     closeBtn.className = "qs-btn qs-btn--icon";
@@ -382,6 +509,7 @@ class QuickScribeReader {
     closeBtn.addEventListener("click", () => this.closeReader());
 
     navControls.appendChild(darkModeBtn);
+    navControls.appendChild(feedbackBtn);
     navControls.appendChild(closeBtn);
 
     navbar.appendChild(logo);
@@ -407,6 +535,9 @@ class QuickScribeReader {
 
     // Set initial theme
     this.applyInitialTheme();
+
+    // Show What's New popup if needed (once per version)
+    this.showWhatsNewIfNeeded();
 
     // Handle escape key
     const handleEscape = (e) => {

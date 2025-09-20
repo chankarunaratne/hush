@@ -1,9 +1,11 @@
 {
   "manifest_version": 3,
   "name": "Hush - A Beautiful Reader Mode",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Hush is a beautiful reader that transforms cluttered websites into clean and focused reading experiences.",
-  "permissions": ["activeTab", "scripting"],
+  "permissions": ["activeTab", "scripting", "storage"],
+  "optional_host_permissions": [],
+  "optional_permissions": [],
   "web_accessible_resources": [
     {
       "resources": ["assets/*.svg", "assets/*.png"],

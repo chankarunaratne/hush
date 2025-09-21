@@ -550,6 +550,86 @@
 
 /* --- END QS NAVBAR --- */
 
+/* --- THEME DROPDOWN --- */
+.qs-dropdown {
+  position: absolute !important;
+  background: #ffffff !important;
+  border: 1px solid #eceff3 !important;
+  border-radius: 10px !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+  padding: 6px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  box-sizing: border-box !important;
+}
+
+.qs-dropdown__item {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 8px 10px !important;
+  border: none !important;
+  background: transparent !important;
+  border-radius: 8px !important;
+  cursor: pointer !important;
+  color: #111827 !important;
+  font-size: 14px !important;
+  text-align: left !important;
+  opacity: 1 !important;
+}
+
+.qs-dropdown__item:hover,
+.qs-dropdown__item:focus-visible {
+  background: #f6f8fa !important;
+}
+
+.qs-dropdown__icon {
+  width: 18px !important;
+  height: 18px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.qs-dropdown__icon img {
+  width: 18px !important;
+  height: 18px !important;
+  filter: none !important;
+}
+
+.qs-dropdown__label {
+  color: #111827 !important;
+  opacity: 1 !important;
+}
+
+/* Ensure no unintended dimming in light mode */
+.qs-dropdown__item *,
+.qs-dropdown__item {
+  opacity: 1 !important;
+}
+
+/* Dark mode styling inherited via [data-theme] on overlay */
+[data-theme="dark"] .qs-dropdown {
+  background: #262c36 !important;
+  border: 1px solid #3d444d !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4) !important;
+}
+[data-theme="dark"] .qs-dropdown__item {
+  color: #e2e8f0 !important;
+}
+[data-theme="dark"] .qs-dropdown__item:hover,
+[data-theme="dark"] .qs-dropdown__item:focus-visible {
+  background: #2f3640 !important;
+}
+[data-theme="dark"] .qs-dropdown__icon img {
+  filter: brightness(0) invert(1) opacity(0.9) !important;
+}
+[data-theme="dark"] .qs-dropdown__label {
+  color: #e2e8f0 !important;
+}
+
 /* === What's New Modal (scoped, non-invasive) === */
 .qs-whatsnew-backdrop {
   position: fixed !important;

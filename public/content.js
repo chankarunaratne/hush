@@ -441,26 +441,30 @@ class QuickScribeReader {
       navControls.appendChild(summaryBtn);
     }
 
-    // --- Dark mode toggle button (UI only) ---
-    const darkModeBtn = document.createElement("button");
-    darkModeBtn.className = "qs-btn qs-btn--icon qs-btn--darkmode";
-    darkModeBtn.type = "button";
-    darkModeBtn.setAttribute("aria-label", "Toggle dark mode");
-    darkModeBtn.setAttribute("role", "button");
+    // --- Theme picker button ---
+    const themePickerBtn = document.createElement("button");
+    themePickerBtn.className = "qs-btn qs-btn--icon qs-btn--theme";
+    themePickerBtn.type = "button";
+    themePickerBtn.setAttribute("aria-label", "Choose theme");
+    themePickerBtn.setAttribute("aria-haspopup", "menu");
+    themePickerBtn.setAttribute("aria-expanded", "false");
+    themePickerBtn.setAttribute("role", "button");
 
-    const darkModeBtnIcon = document.createElement("span");
-    darkModeBtnIcon.className = "qs-btn__icon";
-    darkModeBtnIcon.setAttribute("aria-hidden", "true");
+    const themePickerBtnIcon = document.createElement("span");
+    themePickerBtnIcon.className = "qs-btn__icon";
+    themePickerBtnIcon.setAttribute("aria-hidden", "true");
 
-    const darkModeBtnImg = document.createElement("img");
-    darkModeBtnImg.src = chrome.runtime.getURL("assets/light.svg");
-    darkModeBtnImg.alt = "Toggle dark mode";
-    darkModeBtnImg.className = "qs-btn__svg";
+    const themePickerImg = document.createElement("img");
+    themePickerImg.src = chrome.runtime.getURL("assets/theme-picker.svg");
+    themePickerImg.alt = "Theme picker";
+    themePickerImg.className = "qs-btn__svg";
 
-    darkModeBtnIcon.appendChild(darkModeBtnImg);
-    darkModeBtn.appendChild(darkModeBtnIcon);
-    // Add dark mode toggle logic
-    darkModeBtn.addEventListener("click", () => this.toggleDarkMode());
+    themePickerBtnIcon.appendChild(themePickerImg);
+    themePickerBtn.appendChild(themePickerBtnIcon);
+    themePickerBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      this.toggleThemeDropdown(themePickerBtn);
+    });
 
     // --- Feedback button (icon-only) ---
     const feedbackBtn = document.createElement("button");
@@ -508,7 +512,7 @@ class QuickScribeReader {
     closeBtn.appendChild(closeBtnIcon);
     closeBtn.addEventListener("click", () => this.closeReader());
 
-    navControls.appendChild(darkModeBtn);
+    navControls.appendChild(themePickerBtn);
     navControls.appendChild(feedbackBtn);
     navControls.appendChild(closeBtn);
 
@@ -929,19 +933,154 @@ class QuickScribeReader {
 
   setDarkMode(enabled) {
     const overlay = this.overlay;
-    const darkModeBtn = overlay.querySelector(".qs-btn--darkmode");
-    const iconImg = darkModeBtn ? darkModeBtn.querySelector("img") : null;
     const logo = overlay.querySelector(".qs-navbar-logo");
 
     if (enabled) {
       overlay.setAttribute("data-theme", "dark");
-      if (iconImg) iconImg.src = chrome.runtime.getURL("assets/light.svg"); // Show light icon in dark mode
+      // Theme picker icon remains constant; no swap needed
       if (logo) logo.src = chrome.runtime.getURL("assets/logodark.png"); // Show dark logo in dark mode
     } else {
       overlay.removeAttribute("data-theme");
-      if (iconImg) iconImg.src = chrome.runtime.getURL("assets/dark.svg"); // Show dark icon in light mode
+      // Theme picker icon remains constant; no swap needed
       if (logo) logo.src = chrome.runtime.getURL("assets/logo.png"); // Show regular logo in light mode
     }
+  }
+
+  // --- THEME PICKER DROPDOWN ---
+  toggleThemeDropdown(anchorEl) {
+    if (this._themeDropdownEl && this._themeDropdownEl.parentNode) {
+      this.closeThemeDropdown();
+      return;
+    }
+    this.openThemeDropdown(anchorEl);
+  }
+
+  openThemeDropdown(anchorEl) {
+    if (!this.overlay) return;
+    // Ensure any existing dropdown is closed
+    this.closeThemeDropdown();
+
+    const dropdown = document.createElement("div");
+    dropdown.className = "qs-dropdown";
+    dropdown.setAttribute("role", "menu");
+    dropdown.setAttribute("aria-label", "Theme picker");
+
+    // Build items
+    const themes = [
+      { key: "light", label: "Light", icon: "assets/light.svg" },
+      { key: "dark", label: "Dark", icon: "assets/dark.svg" },
+    ];
+
+    themes.forEach((t) => {
+      const item = document.createElement("button");
+      item.type = "button";
+      item.className = "qs-dropdown__item";
+      item.setAttribute("role", "menuitem");
+      item.dataset.theme = t.key;
+
+      const iconWrap = document.createElement("span");
+      iconWrap.className = "qs-dropdown__icon";
+      const iconImg = document.createElement("img");
+      iconImg.src = chrome.runtime.getURL(t.icon);
+      iconImg.alt = `${t.label} theme`;
+      iconWrap.appendChild(iconImg);
+
+      const label = document.createElement("span");
+      label.className = "qs-dropdown__label";
+      label.textContent = t.label;
+
+      item.appendChild(iconWrap);
+      item.appendChild(label);
+
+      item.addEventListener("click", (e) => {
+        e.stopPropagation();
+        this.selectTheme(t.key);
+      });
+
+      dropdown.appendChild(item);
+    });
+
+    this.overlay.appendChild(dropdown);
+    this._themeDropdownEl = dropdown;
+    this._themeAnchorEl = anchorEl;
+    anchorEl.setAttribute("aria-expanded", "true");
+
+    // Position below the anchor
+    this.positionThemeDropdown();
+
+    // Listeners to close
+    this._onThemeDocumentClick = (evt) => {
+      const target = evt.target;
+      if (
+        !this._themeDropdownEl ||
+        this._themeDropdownEl.contains(target) ||
+        this._themeAnchorEl.contains(target)
+      ) {
+        return;
+      }
+      this.closeThemeDropdown();
+    };
+    document.addEventListener("click", this._onThemeDocumentClick, true);
+
+    this._onThemeKeydown = (evt) => {
+      if (evt.key === "Escape") {
+        this.closeThemeDropdown();
+      }
+    };
+    document.addEventListener("keydown", this._onThemeKeydown);
+  }
+
+  positionThemeDropdown() {
+    if (!this._themeDropdownEl || !this._themeAnchorEl) return;
+    const rect = this._themeAnchorEl.getBoundingClientRect();
+    // Position relative to the overlay (fixed at 0,0)
+    const top = rect.bottom + 6; // 6px gap
+    let left = rect.left;
+
+    // Prevent overflow on right edge
+    const dropdownWidth = 180; // approximate width
+    const maxLeft = Math.max(8, window.innerWidth - dropdownWidth - 8);
+    left = Math.min(left, maxLeft);
+
+    this._themeDropdownEl.style.position = "absolute";
+    this._themeDropdownEl.style.top = `${top}px`;
+    this._themeDropdownEl.style.left = `${left}px`;
+    this._themeDropdownEl.style.minWidth = `${Math.max(160, rect.width)}px`;
+    this._themeDropdownEl.style.zIndex = "100";
+  }
+
+  closeThemeDropdown() {
+    if (this._themeAnchorEl) {
+      this._themeAnchorEl.setAttribute("aria-expanded", "false");
+    }
+    if (this._themeDropdownEl && this._themeDropdownEl.parentNode) {
+      this._themeDropdownEl.parentNode.removeChild(this._themeDropdownEl);
+    }
+    this._themeDropdownEl = null;
+    this._themeAnchorEl = null;
+    this.destroyThemeDropdownListeners();
+  }
+
+  destroyThemeDropdownListeners() {
+    if (this._onThemeDocumentClick) {
+      document.removeEventListener("click", this._onThemeDocumentClick, true);
+      this._onThemeDocumentClick = null;
+    }
+    if (this._onThemeKeydown) {
+      document.removeEventListener("keydown", this._onThemeKeydown);
+      this._onThemeKeydown = null;
+    }
+  }
+
+  selectTheme(themeKey) {
+    if (themeKey === "dark") {
+      this.setDarkMode(true);
+      localStorage.setItem("qs_reader_theme", "dark");
+    } else {
+      this.setDarkMode(false);
+      localStorage.setItem("qs_reader_theme", "light");
+    }
+    this.closeThemeDropdown();
   }
 }
 

@@ -977,7 +977,9 @@ class QuickScribeReader {
       item.type = "button";
       item.className = "qs-dropdown__item";
       item.setAttribute("role", "menuitem");
-      item.dataset.theme = t.key;
+      // Use a neutral data attribute to avoid conflicting with dark-mode CSS
+      // selectors that target [data-theme="dark"] on ancestors
+      item.dataset.themeKey = t.key;
 
       const iconWrap = document.createElement("span");
       iconWrap.className = "qs-dropdown__icon";

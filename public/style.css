@@ -1109,6 +1109,101 @@
   font-weight: 700 !important;
   line-height: 42px !important;
 }
+[data-theme="sepia"].quickscribe-reader-overlay {
+  background: #dfd8ca !important;
+  transition: background 0.3s;
+}
+[data-theme="sepia"] .quickscribe-reader-content {
+  background: #f7f1e4 !important;
+  color: #4b3320 !important;
+  border-radius: 16px !important;
+  box-shadow: 0px 1px 4px 0px rgba(12, 12, 13, 0.05) !important;
+  border: 1px solid #e7dcc9 !important;
+  transition: background 0.3s, color 0.3s, border 0.3s;
+}
+[data-theme="sepia"] .quickscribe-article,
+[data-theme="sepia"] .quickscribe-article div,
+[data-theme="sepia"] .quickscribe-article span,
+[data-theme="sepia"] .quickscribe-article li,
+[data-theme="sepia"] .quickscribe-article td,
+[data-theme="sepia"] .quickscribe-article th,
+[data-theme="sepia"] .quickscribe-subtitle,
+[data-theme="sepia"] .quickscribe-subtitle div,
+[data-theme="sepia"] .quickscribe-subtitle span,
+[data-theme="sepia"] .quickscribe-subtitle p {
+  color: #4b3320 !important;
+}
+[data-theme="sepia"] .quickscribe-article a {
+  color: #8a5a2b !important;
+}
+[data-theme="sepia"] .quickscribe-article h1,
+[data-theme="sepia"] .quickscribe-article h2,
+[data-theme="sepia"] .quickscribe-article h3,
+[data-theme="sepia"] .quickscribe-article h4,
+[data-theme="sepia"] .quickscribe-article h5,
+[data-theme="sepia"] .quickscribe-article h6 {
+  color: #3b2a18 !important;
+}
+[data-theme="sepia"] .quickscribe-article h1 {
+  border-bottom: 2px solid #e7dcc9 !important;
+}
+[data-theme="sepia"] .quickscribe-article blockquote {
+  border-left: 4px solid #e7dcc9 !important;
+  color: #6d4a2f !important;
+}
+[data-theme="sepia"] .quickscribe-summary {
+  background: #efe7d6 !important;
+  border: 1px solid #e7dcc9 !important;
+  color: #4b3320 !important;
+  transition: background 0.3s, border 0.3s, color 0.3s, opacity 0.4s,
+    max-height 0.4s, padding 0.4s, margin 0.4s;
+}
+[data-theme="sepia"] .quickscribe-summary-label-text,
+[data-theme="sepia"] .quickscribe-summary-bullet {
+  color: #4b3320 !important;
+}
+[data-theme="sepia"] .quickscribe-loading,
+[data-theme="sepia"] .quickscribe-loading div,
+[data-theme="sepia"] .quickscribe-loading span,
+[data-theme="sepia"] .quickscribe-loading p {
+  color: #6d4a2f !important;
+}
+[data-theme="sepia"] .quickscribe-loading::after {
+  border: 2px solid #e7dcc9 !important;
+  border-top: 2px solid #b7791f !important;
+}
+[data-theme="sepia"] .qs-navbar {
+  background: #f7f1e4 !important;
+  border-bottom: 1px solid #e7dcc9 !important;
+  color: #4b3320 !important;
+}
+[data-theme="sepia"] .qs-navbar .qs-btn {
+  background: #efe7d6 !important;
+  color: #4b3320 !important;
+  border: 1px solid #e7dcc9 !important;
+  box-shadow: none !important;
+}
+[data-theme="sepia"] .qs-navbar .qs-btn:hover,
+[data-theme="sepia"] .qs-navbar .qs-btn:focus-visible {
+  background: #e9dfcc !important;
+}
+[data-theme="sepia"] .qs-navbar .qs-btn__label {
+  color: #4b3320 !important;
+}
+[data-theme="sepia"] .qs-navbar .qs-btn img {
+  filter: none !important;
+}
+[data-theme="sepia"] .qs-dropdown {
+  background: #fffaf0 !important;
+  border: 1px solid #e7dcc9 !important;
+}
+[data-theme="sepia"] .qs-dropdown__item {
+  color: #4b3320 !important;
+}
+[data-theme="sepia"] .qs-dropdown__item:hover,
+[data-theme="sepia"] .qs-dropdown__item:focus-visible {
+  background: #efe7d6 !important;
+}
 [data-theme="dark"] .quickscribe-subtitle {
   color: #d1d5dc !important;
 }

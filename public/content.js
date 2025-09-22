@@ -906,22 +906,14 @@ class QuickScribeReader {
   // --- DARK MODE LOGIC ---
   applyInitialTheme() {
     const saved = localStorage.getItem("qs_reader_theme");
-    const overlay = this.overlay;
-    let dark = false;
-
-    if (saved === "dark") {
-      dark = true;
-    } else if (saved === "light") {
-      dark = false;
-    } else {
-      // No saved preference - check system preference
-      const systemPrefersDark = window.matchMedia(
-        "(prefers-color-scheme: dark)"
-      ).matches;
-      dark = systemPrefersDark;
+    if (saved === "dark" || saved === "light" || saved === "sepia") {
+      this.setTheme(saved);
+      return;
     }
-
-    this.setDarkMode(dark);
+    const systemPrefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+    this.setTheme(systemPrefersDark ? "dark" : "light");
   }
 
   toggleDarkMode() {
@@ -932,17 +924,25 @@ class QuickScribeReader {
   }
 
   setDarkMode(enabled) {
+    // Backward-compatible wrapper that toggles between light and dark
+    this.setTheme(enabled ? "dark" : "light");
+  }
+
+  // --- Unified theme setter: light | dark | sepia ---
+  setTheme(themeKey) {
     const overlay = this.overlay;
+    if (!overlay) return;
     const logo = overlay.querySelector(".qs-navbar-logo");
 
-    if (enabled) {
+    if (themeKey === "dark") {
       overlay.setAttribute("data-theme", "dark");
-      // Theme picker icon remains constant; no swap needed
-      if (logo) logo.src = chrome.runtime.getURL("assets/logodark.png"); // Show dark logo in dark mode
+      if (logo) logo.src = chrome.runtime.getURL("assets/logodark.png");
+    } else if (themeKey === "sepia") {
+      overlay.setAttribute("data-theme", "sepia");
+      if (logo) logo.src = chrome.runtime.getURL("assets/logo.png");
     } else {
       overlay.removeAttribute("data-theme");
-      // Theme picker icon remains constant; no swap needed
-      if (logo) logo.src = chrome.runtime.getURL("assets/logo.png"); // Show regular logo in light mode
+      if (logo) logo.src = chrome.runtime.getURL("assets/logo.png");
     }
   }
 
@@ -969,6 +969,7 @@ class QuickScribeReader {
     const themes = [
       { key: "light", label: "Light", icon: "assets/light.svg" },
       { key: "dark", label: "Dark", icon: "assets/dark.svg" },
+      { key: "sepia", label: "Sepia", icon: "assets/sepia.svg" },
     ];
 
     themes.forEach((t) => {
@@ -1073,13 +1074,13 @@ class QuickScribeReader {
   }
 
   selectTheme(themeKey) {
-    if (themeKey === "dark") {
-      this.setDarkMode(true);
-      localStorage.setItem("qs_reader_theme", "dark");
-    } else {
-      this.setDarkMode(false);
-      localStorage.setItem("qs_reader_theme", "light");
+    if (themeKey !== "dark" && themeKey !== "light" && themeKey !== "sepia") {
+      themeKey = "light";
     }
+    this.setTheme(themeKey);
+    try {
+      localStorage.setItem("qs_reader_theme", themeKey);
+    } catch (e) {}
     this.closeThemeDropdown();
   }
 }

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>About Hush</title>
+    <link rel="icon" href="./icons/icon48.png" />
+    <link rel="stylesheet" href="./style.css" />
+    <style>
+      /* Hush About (Figma-spec, single mode) */
+      html,
+      body {
+        height: 100%;
+      }
+      body.qs-about-page {
+        margin: 0;
+        background: #f6f8fa; /* Figma background */
+        font-family: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI,
+          Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        color: #36394a;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      .qs-about {
+        min-height: 100dvh;
+        display: grid;
+        place-items: center;
+        padding: 48px 24px;
+      }
+      .qs-about__inner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 72px; /* per Figma */
+      }
+      .qs-about__icon-wrap {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+      }
+      .qs-about__icon {
+        width: 92px;
+        height: 64.74px; /* Figma exact height */
+        display: block;
+        user-select: none;
+      }
+      .qs-about__tagline {
+        margin: 0;
+        font-size: 14px;
+        line-height: 20px;
+        color: #818898; /* Subdued */
+      }
+      .qs-thanks-card {
+        width: 498px;
+        max-width: 92vw;
+        background: #ffffff;
+        border: 1px solid #dfe1e7;
+        border-radius: 16px;
+        padding: 20px 16px 16px;
+        box-sizing: border-box; /* prevent width + padding overflow */
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+      }
+      .qs-thanks-card__header {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .qs-thanks-card__title {
+        margin: 0;
+        font-size: 24px;
+        line-height: 32px;
+        font-weight: 500;
+        letter-spacing: -0.24px;
+        color: #36394a; /* Muted 600 */
+      }
+      .qs-thanks-card__desc {
+        margin: 0;
+        font-size: 14px;
+        line-height: 20px;
+        color: #666d80; /* Normal 500 */
+      }
+      .qs-thanks-card__profile {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+      .qs-thanks-card__avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 999px;
+        object-fit: cover;
+        display: block;
+      }
+      .qs-thanks-card__byline {
+        margin: 0;
+        font-size: 14px;
+        line-height: 20px;
+        color: #666d80;
+      }
+      .qs-follow {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch; /* make children respect container width */
+      }
+      .qs-follow-btn {
+        width: 100%;
+        padding: 8px 10px;
+        border-radius: 6px;
+        box-sizing: border-box; /* include padding in width */
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 500;
+        text-align: center;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+      .qs-follow-btn--primary {
+        color: #ffffff;
+        background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.12) 0%,
+            rgba(255, 255, 255, 0) 100%
+          ),
+          #5f57ff;
+        box-shadow: 0px 1px 2px rgba(26, 19, 161, 0.5), 0px 0px 0px 1px #4f47eb;
+      }
+      .qs-follow-btn--secondary {
+        color: #36394a;
+        background: #ffffff;
+        box-shadow: 0px 1px 2px rgba(164, 172, 185, 0.24),
+          0px 0px 0px 1px rgba(18, 55, 105, 0.08);
+      }
+    </style>
+  </head>
+  <body class="qs-about-page">
+    <main class="qs-about" aria-labelledby="about-title">
+      <div class="qs-about__inner">
+        <div class="qs-about__icon-wrap" aria-hidden="true">
+          <img
+            class="qs-about__icon"
+            src="./assets/thank-you-icon.png"
+            alt=""
+          />
+          <p class="qs-about__tagline">You’re a certified G.</p>
+        </div>
+
+        <section class="qs-thanks-card" role="region" aria-label="About Hush">
+          <div class="qs-thanks-card__header">
+            <h1 id="about-title" class="qs-thanks-card__title">
+              Thank you for using Hush.
+            </h1>
+            <p class="qs-thanks-card__desc">
+              Follow me on Twitter and LinkedIn to stay updated on Hush and my
+              other products. That’s the best way to say thanks.
+            </p>
+          </div>
+
+          <div class="qs-thanks-card__profile">
+            <img
+              class="qs-thanks-card__avatar"
+              src="./assets/profile-pic.png"
+              alt="Profile picture"
+            />
+            <p class="qs-thanks-card__byline">- Chan, founder</p>
+          </div>
+
+          <div class="qs-follow">
+            <a
+              class="qs-follow-btn qs-follow-btn--primary"
+              href="#"
+              role="button"
+              >Follow on Twitter</a
+            >
+            <a
+              class="qs-follow-btn qs-follow-btn--secondary"
+              href="#"
+              role="button"
+              >Follow on LinkedIn</a
+            >
+          </div>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

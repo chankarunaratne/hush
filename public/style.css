@@ -685,6 +685,14 @@
   white-space: pre-wrap !important;
 }
 
+.qs-whatsnew__label {
+  display: block !important;
+  margin: 8px 0 12px 0 !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  color: #111827 !important;
+}
+
 .qs-whatsnew__footer {
   display: flex !important;
   justify-content: flex-end !important;
@@ -733,6 +741,9 @@
 [data-theme="dark"] .qs-whatsnew__body {
   color: #cbd5e1 !important;
 }
+[data-theme="dark"] .qs-whatsnew__label {
+  color: #f8fafc !important;
+}
 [data-theme="dark"] .qs-whatsnew__close {
   background: #262c36 !important;
   border: 1px solid #3d444d !important;
@@ -755,6 +766,25 @@
 [data-theme="dark"] .qs-whatsnew__button--primary:hover,
 [data-theme="dark"] .qs-whatsnew__button--primary:focus-visible {
   background: #2f3640 !important;
+}
+
+/* Sepia variants */
+[data-theme="sepia"] .qs-whatsnew {
+  background: #fffaf0 !important;
+  border: 1px solid #e7dcc9 !important;
+}
+[data-theme="sepia"] .qs-whatsnew__title {
+  color: #3b2a18 !important;
+}
+[data-theme="sepia"] .qs-whatsnew__body,
+[data-theme="sepia"] .qs-whatsnew__label {
+  color: #4b3320 !important;
+}
+[data-theme="sepia"] .qs-whatsnew__button,
+[data-theme="sepia"] .qs-whatsnew__button--primary {
+  background: #efe7d6 !important;
+  color: #4b3320 !important;
+  border: 1px solid #e7dcc9 !important;
 }
 
 .quickscribe-article-source {

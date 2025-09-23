@@ -65,33 +65,65 @@ class QuickScribeReader {
     backdrop.className = "qs-whatsnew-backdrop";
     backdrop.setAttribute("role", "dialog");
     backdrop.setAttribute("aria-modal", "true");
+    // Allow closing by clicking outside the modal
+    backdrop.addEventListener("click", async (e) => {
+      if (e.target === backdrop) {
+        await this.markWhatsNewSeen(version);
+        backdrop.remove();
+      }
+    });
 
     // Modal
     const modal = document.createElement("div");
     modal.className = "qs-whatsnew";
+    // Prevent clicks inside the modal from bubbling to backdrop
+    modal.addEventListener("click", (e) => e.stopPropagation());
 
     const header = document.createElement("div");
     header.className = "qs-whatsnew__header";
 
     const title = document.createElement("h3");
     title.className = "qs-whatsnew__title";
-    title.textContent = "Help us make Hush better ✨";
 
-    const close = document.createElement("button");
-    close.className = "qs-whatsnew__close";
-    close.setAttribute("aria-label", "Close What's New");
-    close.addEventListener("click", async () => {
-      await this.markWhatsNewSeen(version);
-      backdrop.remove();
-    });
-
-    header.appendChild(title);
-    header.appendChild(close);
+    // Version-specific content for 1.0.4
+    if (version === "1.0.4") {
+      title.textContent = "What's new on Hush ✨";
+      header.appendChild(title);
+    } else {
+      // Default/fallback content (keeps prior behavior)
+      title.textContent = "Help us make Hush better ✨";
+      header.appendChild(title);
+      const close = document.createElement("button");
+      close.className = "qs-whatsnew__close";
+      close.setAttribute("aria-label", "Close What's New");
+      close.addEventListener("click", async () => {
+        await this.markWhatsNewSeen(version);
+        backdrop.remove();
+      });
+      header.appendChild(close);
+    }
 
     const body = document.createElement("div");
     body.className = "qs-whatsnew__body";
-    body.textContent =
-      "We are building towards the next version of Hush and we want your help to improve it.\n\nClick the megaphone button (📢) to send us an email with your feedback. Tell us what you want next on Hush.\n\nThank you for helping us make Hush better for everyone! ❤️";
+
+    if (version === "1.0.4") {
+      // Add label element above the body copy
+      const label = document.createElement("div");
+      label.className = "qs-whatsnew__label";
+      label.textContent = "Added Sepia mode! 🌅";
+
+      // Body copy for 1.0.4
+      body.textContent =
+        "After many of you asked for this feature, we have now added Sepia as a theme. Simply click the new theme icon (paintbrush) and select Sepia.\n\nHope you like it. Keep the feedback coming!\n\nCheers,\nChan.";
+
+      // Insert label before body content
+      modal.appendChild(header);
+      modal.appendChild(label);
+    } else {
+      body.textContent =
+        "We are building towards the next version of Hush and we want your help to improve it.\n\nClick the megaphone button (📢) to send us an email with your feedback. Tell us what you want next on Hush.\n\nThank you for helping us make Hush better for everyone! ❤️";
+      modal.appendChild(header);
+    }
 
     const footer = document.createElement("div");
     footer.className = "qs-whatsnew__footer";
@@ -106,8 +138,6 @@ class QuickScribeReader {
     });
 
     footer.appendChild(gotIt);
-
-    modal.appendChild(header);
     modal.appendChild(body);
     modal.appendChild(footer);
     backdrop.appendChild(modal);
@@ -492,6 +522,29 @@ class QuickScribeReader {
       );
     });
 
+    // --- About button (icon-only) ---
+    const aboutBtn = document.createElement("button");
+    aboutBtn.className = "qs-btn qs-btn--icon";
+    aboutBtn.type = "button";
+    aboutBtn.setAttribute("aria-label", "Open About page");
+    aboutBtn.setAttribute("role", "button");
+
+    const aboutBtnIcon = document.createElement("span");
+    aboutBtnIcon.className = "qs-btn__icon";
+    aboutBtnIcon.setAttribute("aria-hidden", "true");
+
+    const aboutBtnImg = document.createElement("img");
+    aboutBtnImg.src = chrome.runtime.getURL("assets/heart.svg");
+    aboutBtnImg.alt = "About";
+    aboutBtnImg.className = "qs-btn__svg";
+
+    aboutBtnIcon.appendChild(aboutBtnImg);
+    aboutBtn.appendChild(aboutBtnIcon);
+    aboutBtn.addEventListener("click", () => {
+      const url = chrome.runtime.getURL("about.html");
+      window.open(url, "_blank");
+    });
+
     // Close reader button
     const closeBtn = document.createElement("button");
     closeBtn.className = "qs-btn qs-btn--icon";
@@ -514,6 +567,7 @@ class QuickScribeReader {
 
     navControls.appendChild(themePickerBtn);
     navControls.appendChild(feedbackBtn);
+    navControls.appendChild(aboutBtn);
     navControls.appendChild(closeBtn);
 
     navbar.appendChild(logo);

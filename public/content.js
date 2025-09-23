@@ -85,28 +85,14 @@ class QuickScribeReader {
     const title = document.createElement("h3");
     title.className = "qs-whatsnew__title";
 
-    // Version-specific content for 1.0.4
+    // Version-specific content - only show popup for explicitly defined versions
     if (version === "1.0.4") {
       title.textContent = "What's new on Hush ✨";
       header.appendChild(title);
-    } else {
-      // Default/fallback content (keeps prior behavior)
-      title.textContent = "Help us make Hush better ✨";
-      header.appendChild(title);
-      const close = document.createElement("button");
-      close.className = "qs-whatsnew__close";
-      close.setAttribute("aria-label", "Close What's New");
-      close.addEventListener("click", async () => {
-        await this.markWhatsNewSeen(version);
-        backdrop.remove();
-      });
-      header.appendChild(close);
-    }
 
-    const body = document.createElement("div");
-    body.className = "qs-whatsnew__body";
+      const body = document.createElement("div");
+      body.className = "qs-whatsnew__body";
 
-    if (version === "1.0.4") {
       // Add label element above the body copy
       const label = document.createElement("div");
       label.className = "qs-whatsnew__label";
@@ -119,10 +105,11 @@ class QuickScribeReader {
       // Insert label before body content
       modal.appendChild(header);
       modal.appendChild(label);
+      modal.appendChild(body);
     } else {
-      body.textContent =
-        "We are building towards the next version of Hush and we want your help to improve it.\n\nClick the megaphone button (📢) to send us an email with your feedback. Tell us what you want next on Hush.\n\nThank you for helping us make Hush better for everyone! ❤️";
-      modal.appendChild(header);
+      // No fallback popup - only show for explicitly defined versions
+      backdrop.remove();
+      return;
     }
 
     const footer = document.createElement("div");
